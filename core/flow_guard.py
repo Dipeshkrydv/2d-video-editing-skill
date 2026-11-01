@@ -2,7 +2,7 @@
 """flow_guard.py: device-wide pacing ledger for Google Flow generations.
 
 Policy (chosen by the studio owner):
-  * 1.3 s between prompt submissions to Flow (images generate in parallel)   FLOW_GUARD_GAP (default 1.3)
+  * 0.8 s between prompt submissions to Flow (images generate in parallel)   FLOW_GUARD_GAP (default 0.8)
   * prompts are submitted one by one, never as one big batch call
   * the FIRST "unusual activity" answer stops generation: the queue is cancelled
     and nothing more is sent until the user resumes (`python studio.py generate`
@@ -43,7 +43,7 @@ except ImportError:                     # Windows
         msvcrt.locking(fh.fileno(), msvcrt.LK_UNLCK, 1)
 
 LEDGER = os.path.expanduser(os.environ.get("FLOW_GUARD_LEDGER", "~/.deepesh_flow_guard.json"))
-GAP = float(os.environ.get("FLOW_GUARD_GAP", "1.3"))
+GAP = float(os.environ.get("FLOW_GUARD_GAP", "0.8"))
 MAX_ITEMS = 1                      # one prompt per submission; the gap is what paces Flow
 FLAG_MARKERS = ("UNUSUAL_ACTIVITY", "unusual activity")
 
