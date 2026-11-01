@@ -13,10 +13,19 @@ python studio.py check && python studio.py sheet && python studio.py render
 
 ---
 
+## 🧩 Install as an AntiGem Plugin
 
-> **The Ultimate All-in-One AI Video Documentary, Kinetic Typography & Stickman Animation Engine for Android (Termux) & Desktop.**
+You can install **2D Video Editing Studio** directly inside the **AntiGem** app:
 
-Deepesh Mobile Studio (formerly `xdeepfreevideogeneration`) is a production-grade, zero-cost video creation system designed to run both on mobile devices (via Android Termux) and high-performance desktop environments. It unifies Vox-style documentary collages, modern stickman hybrid animations, hand-drawn crayon doodling, and high-tension crime/suspense documentary directing.
+1. Open **AntiGem**.
+2. Go to **Settings → Custom AntiGem Plugins → Repositories**.
+3. Add this repository:
+   ```
+   Dipeshkrydv/2d-video-editing-skill
+   ```
+   *(or `https://github.com/Dipeshkrydv/2d-video-editing-skill`)*
+4. Browse the repository plugins and click **Install** on **2D Video Editing Studio**.
+5. All 26 autonomous skills, styles, fonts, and engines will be installed instantly with automatic updates!
 
 ---
 

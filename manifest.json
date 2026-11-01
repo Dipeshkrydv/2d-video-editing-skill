@@ -1,0 +1,21 @@
+{
+  "id": "2d-video-editing-studio",
+  "name": "2D Video Editing Studio",
+  "version": "3.1.0",
+  "description": "Master Autonomous 2D Video Director & Production Engine: Broadcast-quality Vox explainers, stickman animations, doodle sketchbooks, crime documentary thrillers, and 8-bit retro arcade videos with rapid Google Flow parallel asset dispatch.",
+  "author": "Dipesh Kr Yadav",
+  "icon": "icon.png",
+  "entrypoint": "studio.py",
+  "skills": "skills",
+  "keywords": [
+    "video-editor",
+    "motion-graphics",
+    "vox-documentary",
+    "stickman-animation",
+    "hand-drawn-doodle",
+    "crime-documentary",
+    "8bit-arcade",
+    "google-flow",
+    "cartesia-tts"
+  ]
+}
