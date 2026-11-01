@@ -79,7 +79,11 @@ objected when this was done in sequence).
   - If the Kaggle job is QUEUED, or the user would rather run it locally, follow PLAYBOOK §4
     "Kaggle queue": stop and ASK, with the options and their honest cost on THIS machine.
   - Do what the user picks. Never decide alone.
-- **Canvas & Style Purity (Authentic Whiteboard/Doodle)**: Never place stick figures over photorealistic backgrounds or 3D photos. Use 100% warm paper `#F8F6EF`, notepad, or blackboard canvas. Stickmen, props, and diagrams are pure ink/crayon doodles generated on magenta `#FF00FF` and keyed into `elements/cut/`.
+- **Modern Storytelling Stickman & 2D Environments**: 
+  - **Character Rig**: Clean white circular head with bold black ink contours (3-5px). Expressive eyebrows, pill/dot eyes, smirk or wide-eyed shock `O`. Dressed in modern casual attire (oversized hoodie with drawstrings, rolled blue denim shorts, white sneakers, backward snapback cap) or thematic costume (explorer fedora + leather satchel, superhero cowl, caveman tunic) with 2D cel shading.
+  - **Staging & Scenic Depth**: Backgrounds can be warm paper canvas (`#F8F6EF`) OR stylized 2D hand-drawn scenes (cliff edge overlooking valleys, turbulent canyon rapids in an inflatable raft, fork in the road with directional signpost, sunlit study desk with notebooks and pencils).
+  - **Selective Color Contrast**: Slate monochrome / cross-hatched greyscale environments with the stickman and hero props popping in rich saturated color (orange, cobalt blue, yellow). Strictly zero photorealistic live-action photos or 3D CGI renders.
+- **Die-Cut Sticker & Pop-Art Elements**: Cutout stickers receive a crisp solid white vinyl die-cut border (4-8px) and soft 2-tier ambient drop shadow. Include satirical pop-art props (e.g. parody branding, detailed anatomical brain illustrations with speech bubbles, 3D extruded comic typography `"GOOD!"`).
 - **Editorial Typography & Anti-Clutter**: Use `hand` (Kalam) font for titles and keywords. Use `doodle_circle` (hand-drawn loop), `marker`, and `sticky` treatments. Enforce the **Rule of One Dominant Idea**: max 1-2 text elements per scene so the frame breathes. Never clutter the screen with competing text layers.
 - **Motion & Beats**: Motion comes from purposeful doodle entrances (spring pop 0.88 -> 1.0, sketch drawing reveals) and gentle 4% camera drift. A new visual beat every ~1.2–1.8s matching spoken nouns. Strictly zero continuous shaking or jitter loops.
 - Pictures and stickers use Nano Banana 2 (Flow shows it as "Nano Banana 2.1"), never Pro: `pictures.py`

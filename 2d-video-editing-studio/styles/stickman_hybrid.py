@@ -42,14 +42,14 @@ AVOID  crayon scribbles, speech-bubble clutter, red bursts, polaroids, dark back
 NAME = "sticker"
 ALIASES = ["stickman", "stickman_hybrid", "doodle", "whiteboard", "explainer"]
 
-_NEG = ("no photorealism, no photograph, no 3D render, no cinematic lighting, no gradient background, "
-        "no cityscape, no text, no letters, no captions, no watermark, no logo, no UI, no frames, no borders, "
-        "no drop shadow, no outline glow")
+_NEG = ("no photorealism, no realistic live-action photo, no 3D cgi render, no photographic human skin, "
+        "no text, no letters, no captions, no watermark, no logo, no UI, no frames, no borders, "
+        "no messy scribble, no blur")
 
 STYLE = {
     "look": {
         # warm paper / sketchbook canvas with subtle natural vignette
-        "bg": (245, 241, 230), "bg_kind": "paper", "vig": 0.22, "vig_tint": (1.0, 0.94, 0.86),
+        "bg": (245, 241, 230), "bg_kind": "paper", "vig": 0.18, "vig_tint": (1.0, 0.94, 0.86),
         "ink": (24, 22, 20), "muted": (110, 102, 92),
         "accent": (214, 60, 40),           # vibrant red marker
         "accent2": (240, 175, 15),         # warm yellow highlighter
@@ -57,7 +57,7 @@ STYLE = {
         "panel": (255, 252, 244, 240),
         "stamp_color": (214, 60, 40), "string_color": (24, 22, 20),
         "caption": "plate",
-        "asset_frame": "flat", "photo_frame": "flat",
+        "asset_frame": "clean", "photo_frame": "flat",
         "label_style": "plain",
         "halftone": False, "photo_halftone": False, "dot": 7,
         "title_font": "hand", "big_font": "hand",   # Authentic hand-drawn Kalam typography
@@ -72,20 +72,20 @@ STYLE = {
     },
     "prompt": {
         "clarity": (
-            "ONE minimalist black ink line drawing on pure white background, authentic digital whiteboard sketch, "
-            "Casually Explained and MinutePhysics animation style, expressive stick figure or clean doodle prop, "
-            "bold confident black outlines, flat minimal pastel spot color fill, zero photographic scenery, "
-            "completely isolated with generous empty white margins, instantly readable at small thumbnail size"
+            "ONE expressive modern 2D storytelling illustration, Casually Explained and Alan Becker animation style, "
+            "clean white circular head, bold black ink contour lines, highly expressive eyebrows and smirk, "
+            "wearing modern casual attire (oversized hoodie, rolled denim shorts, sneakers) or thematic explorer outfit, "
+            "clean 2D cel shading, selective color contrast where the character pops vibrantly, crisp vector clarity"
         ),
-        "medium": "minimalist black ink line doodle drawing, authentic digital whiteboard sketch, clean stickman illustration",
-        "lighting": "flat pure digital whiteboard light, zero drop shadow, zero cast shadow, zero gradients",
-        "palette": "crisp black ink outlines, warm paper tones, sparing spot accents of red, cobalt blue, and yellow",
-        "camera": {"shot": "centred hero shot", "lens": "flat 2D vector line drawing", "angle": "straight-on",
+        "medium": "modern 2D digital animation illustration, expressive comic stickman character, clean 2D vector art",
+        "lighting": "cinematic directional light with soft cel shadows, warm sunlit pools or crisp flat studio light",
+        "palette": "bold black ink contours, clean white head, saturated accent clothing (orange, cobalt blue, grey, denim), slate monochrome environments",
+        "camera": {"shot": "centred hero shot", "lens": "2D animation camera", "angle": "straight-on",
                    "movement": "none"},
-        "mood": "funny, curious, satirical, minimalist, highly educational",
+        "mood": "funny, curious, satirical, storytelling, educational",
         "quality": "crisp organic hand-drawn ink lines, bold silhouette, clean vector edges, instant readability",
-        "negative": _NEG + ", realistic background, bedroom, living room, office, landscape, complex scenery, photographic textures",
-        "asset_medium": "isolated black ink stick figure or hand-drawn doodle prop with crisp outlines on solid flat pure magenta background hex 0xFF00FF",
+        "negative": _NEG,
+        "asset_medium": "isolated modern 2D stickman character or pop-art prop with crisp black ink outlines on solid flat pure magenta background hex 0xFF00FF",
     },
 }
 
@@ -177,6 +177,31 @@ RECIPES = {
             {"type": "keyword", "text": "दबाव", "box": "doodle_circle", "slot": "r1", "at": "WORD"},
         ],
     },
+    "story_scene": {
+        "layout": "retro_hero", "bg": "paper",
+        "items": [
+            {"type": "kicker", "text": "THE JOURNEY"},
+            {"type": "title", "text": "मंज़िल की *तलाश*", "at": "WORD"},
+            {"type": "asset", "name": "st_stickman_explorer", "slot": "center", "at": "WORD"},
+            {"type": "keyword", "text": "सही रास्ता", "box": "sticky", "slot": "label", "at": "WORD"},
+        ],
+    },
+    "speech_sticker": {
+        "layout": "whiteboard_hero", "bg": "paper",
+        "items": [
+            {"type": "asset", "name": "st_stickman_brain_offer", "slot": "center", "at": "WORD"},
+            {"type": "title", "text": "PLEASE USE IT!", "box": "doodle_circle", "at": "WORD"},
+            {"type": "keyword", "text": "सोच समझकर", "box": "tag", "slot": "r1", "at": "WORD"},
+        ],
+    },
+    "story_desk": {
+        "layout": "whiteboard_hero", "bg": "paper",
+        "items": [
+            {"type": "kicker", "text": "DEEP WORK"},
+            {"type": "title", "text": "रात भर *पढ़ाई*", "at": "WORD"},
+            {"type": "asset", "name": "st_stickman_desk_study", "slot": "center", "at": "WORD"},
+        ],
+    },
     "row3_labels": {
         "layout": "row3", "bg": "paper",
         "items": [
@@ -204,23 +229,31 @@ RECIPES = {
 
 EXAMPLES = [
     "whiteboard stickman with doodle circled note: RECIPES['whiteboard_hero']",
+    "storytelling stickman explorer: RECIPES['story_scene']",
+    "stick figure with prop & speech bubble: RECIPES['speech_sticker']",
+    "stickman studying at sunlit desk: RECIPES['story_desk']",
     "clean flat illustrations in a row: RECIPES['row3_labels'] / ['row2_labels']",
     "doodle circled question title: RECIPES['pop_title']",
 ]
 
-# ---- asset plan: stickman doodle explainer (0% photo scenes, 100% canvas + doodle assets) ---------------
+# ---- asset plan: modern stickman explainer (25% stylized 2D scenes, 65% expressive stick assets) ---
 BEAT_S = 1.3
-MIX = {"scene": 0.0, "asset": 0.88, "reuse": 0.0, "text": 0.12}
+MIX = {"scene": 0.25, "asset": 0.65, "reuse": 0.02, "text": 0.08}
 
 MENU = {
-    "scene": [],
-    "asset": ["stickman expressing emotion (confused, stressed, tired, triumphant, shocked)",
-              "stickman performing an action (working at desk, running, collapsing, pointing, searching)",
+    "scene": ["hand-drawn 2D landscape (cliff overlooking mountains, canyon rapids, desert path)",
+              "stylized warm indoor room (wooden desk with notebooks, sunlit window, library)",
+              "fork in the road crossroad with wooden directional signpost",
+              "storybook settlement / ancient village in cross-hatched ink"],
+    "asset": ["stickman expressing emotion (confused, stressed, tired, triumphant, shocked, smirking)",
+              "stickman performing an action (working at desk, rowing raft, holding map, running, pointing)",
+              "stickman in casual modern outfit (hoodie, rolled denim shorts, sneakers, backward cap)",
+              "stickman with thematic prop (explorer fedora + satchel, flash cowl, caveman tunic)",
+              "pop-art sticker prop (satirical brand parody, detailed anatomical brain, speech bubble)",
               "hand-drawn doodle object (clock, coffee cup, laptop, money stack, lightbulb, book)",
               "doodle diagram (flowchart arrow, circled highlight, graph trend, Venn diagram)",
-              "hand-drawn doodle location or vehicle (tiny car, doodle house, paper airplane, stick ship)",
               "symbol / icon doodle (caution sign, question mark, lightning bolt, cross mark X)"],
 }
-ACCENTS = ["red marker accent", "cobalt blue ink accent", "mustard highlighter accent"]
+ACCENTS = ["red marker accent", "cobalt blue ink accent", "mustard highlighter accent", "selective saturated color"]
 
 DESIGN = __doc__

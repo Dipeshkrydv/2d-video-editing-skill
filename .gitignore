@@ -45,3 +45,9 @@ deepesh_mobile_studio/
 Thumbs.db
 .vscode/
 .idea/
+
+# Local Style Reference photo datasets
+stick man style /
+sticker style /
+vox style/
+

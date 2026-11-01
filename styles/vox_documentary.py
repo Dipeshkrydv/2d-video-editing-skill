@@ -296,6 +296,43 @@ RECIPES = {
             {"type": "title", "text": "सत्ता का *केंद्र*", "box": "strip", "at": "WORD"},
         ],
     },
+    # Pinned Polaroid with 3D pushpin on antique map/grid
+    "polaroid_pin": {
+        "layout": "stat_hero", "bg": "grid",
+        "items": [
+            {"type": "kicker", "text": "ARCHIVE // EVIDENCE"},
+            {"type": "photo", "src": "POLAROID_DOC", "frame": "torn", "slot": "right", "at": "WORD"},
+            {"type": "keyword", "text": "फ़ाइल #402", "box": "tag", "slot": "l1", "at": "WORD"},
+            {"type": "note", "text": "खुफ़िया दस्तावेज़", "slot": "tag", "at": "WORD"},
+        ],
+    },
+    # Architecture cutout layered over giant burnt-orange / red background orb
+    "arch_orb": {
+        "layout": "strip_hero", "bg": "paper", "accent": "#E65100",
+        "items": [
+            {"type": "block", "shape": "circle", "color": "accent", "slot": "center", "at": "WORD"},
+            {"type": "asset", "name": "CUTOUT_MONUMENT", "slot": "center", "frame": "clean", "at": "WORD"},
+            {"type": "title", "text": "इतिहास का *गवाह*", "box": "highlighter", "at": "WORD"},
+        ],
+    },
+    # Tilted seesaw comparing two entities/metrics
+    "seesaw_compare": {
+        "layout": "split_compare", "bg": "paper",
+        "items": [
+            {"type": "title", "text": "बड़ा *असंतुलन*", "box": "strip", "at": "WORD"},
+            {"type": "asset", "name": "CUTOUT_LEFT", "slot": "left", "label": "1.8x", "at": "WORD"},
+            {"type": "asset", "name": "CUTOUT_RIGHT", "slot": "right", "label": "3.1x", "at": "WORD"},
+        ],
+    },
+    # Halftone projection light cone from TV / screen across subject
+    "light_cone": {
+        "layout": "strip_hero", "bg": "paper", "accent2": "#FFB300",
+        "items": [
+            {"type": "title", "text": "टेलीविज़न: *प्रचार का साधन*", "box": "highlighter", "at": "WORD"},
+            {"type": "asset", "name": "CUTOUT_TV_SCENE", "slot": "center", "at": "WORD"},
+            {"type": "note", "text": "1960s BROADCAST", "slot": "l1", "at": "WORD"},
+        ],
+    },
 }
 
 EXAMPLES = [
@@ -306,6 +343,10 @@ EXAMPLES = [
     "textured bar chart: RECIPES['bar_chart']",
     "gilt-framed portrait: RECIPES['framed_portrait']",
     "colour blocks + panorama: RECIPES['wide_blocks']",
+    "pinned polaroid on archival grid: RECIPES['polaroid_pin']",
+    "architecture with giant background color orb: RECIPES['arch_orb']",
+    "seesaw comparison balance: RECIPES['seesaw_compare']",
+    "light cone projection sweep: RECIPES['light_cone']",
 ]
 
 # ---- asset plan: what a Vox collage needs --------------------------------------------------------------
@@ -315,9 +356,11 @@ BEAT_S = 1.4
 MIX = {"scene": 0.35, "asset": 0.50, "reuse": 0.05, "text": 0.10}
 MENU = {
     "scene": ["archival street / crowd photograph", "interior room photograph", "landscape / place photograph",
-              "group portrait", "action moment (hands, working, marching)", "wide panorama (skyline, harbour, fort)"],
+              "group portrait", "action moment (hands, working, marching)", "wide panorama (skyline, harbour, fort)",
+              "antique archival map with highlighted neon boundaries", "retro TV projection room with light cone"],
     "asset": ["person portrait, torso, facing camera", "person full-length, walking", "object on its own (tool, vehicle, machine)",
-              "map of a place", "newspaper clipping / document / letter", "building or monument", "hands holding something",
+              "map of a place", "newspaper clipping / document / letter", "building or monument", "hands holding something (camera, magnifying glass)",
+              "giant open palm holding city architecture", "businessman tightrope walker with briefcase", "server rack with snaking power cables",
               "animal / plant", "coin / medal / jewel", "flag / emblem / seal", "clock / calendar / date page", "crowd cut-out"],
 }
 ACCENTS = ["one mustard-yellow object", "one navy-blue object", "one orange object", "no colour: pure black and white"]

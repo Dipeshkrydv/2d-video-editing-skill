@@ -73,11 +73,16 @@ what make the film understandable. Follow them without exception.
 
 - Every spoken noun gets its own bespoke PNG. Never reuse one generic picture.
 - Draw data in code: clocks, numbers, bars and lines. Never ask AI to draw them.
-- Every named place gets a map with a pin. Rough maps are fine; never drop a map
-  for accuracy.
+- Every named place gets a map with a pin. Rough maps are fine; never drop a map for accuracy.
+- **Master Vox Editorial Collage Recipes**:
+  - `stat_hero`: Giant bold numeral in deep navy or black (`46`, `2430m`) + dark ribbon category pill + dotted perspective guidelines.
+  - `arch_orb`: High-contrast B&W halftone architecture or skyline cutout layered over a giant circular color orb (burnt orange `#E65100` or crimson red).
+  - `polaroid_pin`: Archival Polaroid or document slide pinned with a 3D colorful pushpin (lime green, red) on an antique map with highlighted neon boundaries.
+  - `visual_metaphor`: Conceptual editorial storytelling (e.g. tightrope walker with briefcase on dollar-bill peaks; seesaw balance beam; server rack power grid; giant open palm holding architecture).
+  - `light_cone`: Halftone dot-pattern projection cone expanding from a retro TV or spotlight across the subject with angled Swiss headline.
+  - `selective_mono`: Full row of monochrome buildings/objects with ONE single hero in saturated color.
 - **Selective Editorial Typography & Anti-Clutter**: Enforce the **Rule of One Dominant Idea** per beat (max 1-2 text elements on screen). Never stack kicker, title, keyword badge, and element labels simultaneously. Use Swiss graphic design: `highlighter` (translucent yellow marker sweep), `stat_hero` for big numbers, and `doc_highlight` for archival documents. Hold every reveal at least 0.7 s before the cut.
-- Never paste or ask for API keys or tokens in the chat. Keys go in `.env`
-  files that the user edits.
+- Never paste or ask for API keys or tokens in the chat. Keys go in `.env` files that the user edits.
 - On machines with 8 GB of RAM or less, keep ffmpeg at `-threads 3` (the
   scripts already do) and run one heavy job at a time.
 - Labels use the font in `VOX_FONT`, or the OS default with Devanagari. For

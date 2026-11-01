@@ -72,11 +72,24 @@ Every AI agent (Antigravity, Claude Code, Gemini CLI, Cursor, Windsurf, or termi
    - Strictly forbidden to hardcode, print, commit, or leak private API keys in code, git, markdown, logs, or archives.
    - Always load from environment variables (`CARTESIA_API_KEY`) or interactive runtime prompts.
 
-7. **Genre-Authentic Style Purity (Abolition of the "Full Photo + Cutout Sticker" Universal Formula)**:
+7. **Genre-Authentic Style Purity (Ground-Truth Directorial Standards from Reference Frames)**:
    - Every style has its own visual language. The engine and agent MUST NEVER apply a lazy, universal formula (e.g. background photo + cutout sticker on top) across all styles.
-   - **Stickman / Hand-Drawn Doodle**: 100% warm textured paper (`#F8F6EF`) or chalkboard canvas. Pure ink/crayon doodles on magenta keyed into `elements/cut/`. Strictly ZERO photorealistic background scenes.
+   - **Stickman / Modern Storytelling Explainer**:
+     - *Character Anatomy*: Clean white circular head, thick black ink contours (3-5px), highly expressive eyebrows and smirk/shock eyes. Dressed in modern casual attire (oversized hoodie with drawstrings, rolled blue denim shorts, white sneakers, backward cap) or thematic costume (explorer fedora + satchel, caveman tunic) with 2D cel shading.
+     - *Staging & Scenic Depth*: Warm paper canvas (`#F8F6EF`) OR stylized 2D hand-drawn scenic environments (cliff edge over mountains, canyon rapids in inflatable boat, fork in the road with wooden signpost, sunlit study desk with notebooks).
+     - *Selective Color Contrast*: Slate monochrome / cross-hatched landscapes with the stickman and hero prop popping in rich saturated color (orange, cobalt blue, yellow). Strictly ZERO photorealistic live-action photos or 3D CGI renders.
+   - **Vox Documentary Explainer**:
+     - *Canvas & Texture*: Tactile paper canvas (`#F4ECE1`), subtle graph paper grids, crumpled paper folds, and vintage halftone printing dot patterns.
+     - *Archival Cutouts & Giant Color Orbs*: High-contrast B&W halftone architecture or portraits layered over giant solid circular background color orbs (burnt orange `#E65100`, crimson red `#D32F2F`, or sky blue).
+     - *Pinned Polaroids & Maps*: Archival document slides and Polaroids pinned with 3D colorful pushpins (lime green `#76FF03`, vivid red) on antique maps with neon boundary lines.
+     - *Conceptual Visual Metaphors*: High-concept editorial storytelling (e.g. tightrope walker with briefcase balancing on dollar-bill mountain peaks; seesaw comparison beam; server racks with snaking power cables; giant open palm holding city architecture).
+     - *Light Cones & Projector Rays*: Halftone dot-pattern projection cone expanding from a retro TV or spotlight across the subject with an angled Swiss headline.
+     - *Selective Monochrome Isolation*: A row of monochrome buildings/objects with ONE single hero in saturated color (`"As a small, growing business"`).
+   - **Sticker Style / Pop-Art Cutouts**:
+     - *Crisp White Vinyl Die-Cut Contour*: Every character, prop, and badge has a solid, continuous white outer border (4-8px) and a soft 2-tier ambient drop shadow.
+     - *Satirical Pop-Art & Meme Metaphors*: Parody branding (e.g. Marlboro cigarette pack labeled "Adobe" with software pens), detailed anatomical brain illustrations with speech bubbles (`"PLEASE USE IT"`), floating brand avatars.
+     - *3D Kinetic Lettering*: Extruded 3D comic badges (`"GOOD!"`, `"CRASH!"`) with yellow faces and red 3D bevels.
    - **Suspense Noir / True Crime**: 70%+ full-bleed photographic/cinematic chiaroscuro scenes (`scene: 0.70, asset: 0.20`), isolated forensic cutouts on magenta keyed with two-tier soft shadows, redaction bars (`redact_bar`), CCTV timestamps (`cctv`), and evidence polaroids. Strictly ZERO cartoon stickers.
-   - **Vox Documentary Explainer**: Tactile paper canvas, Swiss graphic design, archival documents with translucent yellow highlighter sweeps (`highlighter`), statistical callouts (`stat_hero`), and document breakdown splits (`doc_highlight`, `split_compare`).
    - **Retro 8-Bit Arcade**: Authentic pixel art backgrounds and sprites, CRT scanlines, and 16-bit double-border dialogue boxes (`rpg`, `rpg_dialogue`).
 
 8. **Anti-Clutter Editorial Typography & The Rule of One Dominant Idea**:
