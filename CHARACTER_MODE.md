@@ -1,15 +1,13 @@
-# CHARACTER_MODE.md — cute character-based 2D storytelling (v3, optional)
+# CHARACTER_MODE.md — [DEPRECATED & REMOVED]
 
-A cute, consistent 2D cartoon character who lives inside the video. They walk in, talk to camera with lip-flaps locked
-to the real voiceover words, point at the evidence, react, look around, and walk through a parallax world while the
-camera follows them. It is **not** a still picture with a zoom.
-
-It is an **optional mode**. Every existing style keeps working exactly as before. The character appears only in the
-scenes that ask for it, e.g. a Vox-style documentary about Nepal where, in the middle, the host walks in and explains
-why Nepal is beautiful.
-
-Engine: `core/engine/character.py` · Style pack: `styles/cute_toon.py` (`"style": "toon"`, optional) ·
-Prompts: `core/prompt_engine.py` (kinds `character`, `layer`) · Generation: `core/flow_safe.py` (reference images).
+> ⚠️ **REMOVAL NOTICE**: Character Mode has been permanently removed from Deepesh Mobile Studio.
+> Due to AI multi-pose inconsistency, uncanny puppet lip-flaps, and visual distortion ("illusion issue"), animated cartoon hosts are strictly eliminated.
+> The studio exclusively produces broadcast-grade, high-retention explainers through authentic 2D cinematography:
+> 1. Vox Documentary Explainer
+> 2. Sticker / Stickman Hybrid
+> 3. Hand-Drawn Doodle & Sketchbook
+> 4. Suspense Noir / Crime Documentary
+> 5. Retro 8-Bit Arcade
 
 ---
 

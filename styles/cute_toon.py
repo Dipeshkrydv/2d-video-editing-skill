@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Cute toon storytelling -- character-driven 2D explainer engine (v3 Character Mode).
-
-The look of modern illustrated story channels: ONE appealing cartoon host with big expressive eyes and a clean
-silhouette who walks, talks, points and reacts inside a soft layered world. Use it as the whole video's style,
+"""[DEPRECATED / REMOVED] Cute toon storytelling (Discontinued to prevent AI multi-pose illusion and uncanny distortion).
+Use the 5 core broadcast styles: vox_documentary, stickman_hybrid, suspense_crime, arcade, box.
 or keep your documentary style and drop "character" items / "stage" scenes into chosen segments (the character
 works in every style -- see CHARACTER_MODE.md).
 

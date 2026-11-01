@@ -1,8 +1,6 @@
 # Deepesh Studio Engine v2 — reference (with v3 additions)
 
-> **v3 additions** (details: CREATIVE_DIRECTOR.md, CHARACTER_MODE.md)
-> * item `character` + layouts `presenter`, `presenter_l`, `stage` (with a `cast` slot) + scene field `stage` (parallax layers,
->   tracking camera, particles) · SHOTS.json kinds `character` (pose library, Flow reference images) and `layer`
+> **v3 additions** (details: CREATIVE_DIRECTOR.md)
 > * `stamp` has 5 designs: `rubber` `seal` `tape` `scrawl` `tab` (`"design"`); the variety pass allows ≤ 2 rubber stamps per
 >   video and re-designs the rest; EDIT.json `"variety": {"auto": true, "budget": {...}, "rubber_gap": 3}`
 > * `kicker` renders at 46 px (`"size"`) in 5 designs: `bar` `chip` `bracket` `rule` `index` (`"design"`, `"number"`)

@@ -58,9 +58,15 @@ Every AI agent (Antigravity, Claude Code, Gemini CLI, Cursor, Windsurf, or termi
      - **Concrete Technical Specificity in `SHOTS.json`**: Lens (24mm, 35mm, 85mm macro), angle (low-angle, Dutch, eye-level), lighting (rim light, chiaroscuro, torch pools), and composition (negative space for text overlays) must be explicitly defined for every shot (no vague words like 'cool' or 'awesome').
      - **Motion Choreography in `EDIT.json`**: Map camera motion (whip pan, punch-in, zoom, shake) directly into Remotion springs and OpenCV camera moves.
 
-5. **Character Mode (Optional)**:
-   - A cute, consistent 2D host who walks, talks (lip-sync to the VO words), points, reacts, and travels through parallax stages.
-   - Use for ~20-35% of runtime where a person would speak. Full guide in `CHARACTER_MODE.md`.
+5. **Abolition of Character Mode (Anti-Illusion & Zero AI Morphing Mandate)**:
+   - Multi-pose 2D cartoon avatars, puppet lip-flaps, and character walking modes are **COMPLETELY ELIMINATED** to prevent AI face/body inconsistencies, uncanny puppet motion, and multi-pose visual distortion ("illusion issue").
+   - The studio EXCLUSIVELY produces authentic, broadcast-grade explainers across the 5 core styles:
+     1. **Vox Documentary Explainer**
+     2. **Sticker / Stickman Hybrid**
+     3. **Hand-Drawn Doodle & Sketchbook**
+     4. **Suspense Noir / Crime Documentary**
+     5. **Retro 8-Bit Arcade**
+   - Narrative pacing and visual engagement are driven 100% through authentic environmental scenes, forensic evidence cutouts, archival documents, vector badges, and kinetic typography. Never introduce animated cartoon hosts.
 
 6. **Zero API Key Leaks & Security Mandate**:
    - Strictly forbidden to hardcode, print, commit, or leak private API keys in code, git, markdown, logs, or archives.
@@ -263,7 +269,7 @@ Whenever a user requests a **Crime Documentary, True Crime, Murder Mystery, Poli
 2. **Organic Word-to-Word Directorial Asset Selection**: Dictated by script and voiceover pacing. Zero visual starvation; visual progression every 1.0–1.6s.
 3. **Curated Static Heavyweight Typography**: Exclusively use bold static fonts (**Anton-Regular**, **Khand-Bold**, **Baloo2-ExtraBold**, **LiberationSans-Bold**, **Space Mono**, **Noto Sans Devanagari**, **Hind**) with dynamic multi-line wrapping and font auto-scaling. Zero text clipping, zero thin hairline font bugs.
 4. **Zero Tofu Glyphs (`▯▯`)**: All text passes through `sanitize_scene_text()` to strip emojis, rare dingbats, and invalid Unicode. Only clean Devanagari, Latin alphabet, and standard punctuation are rendered.
-5. **12-Column Grid & Spatial Hierarchy**: 3-layer parallax, rule of thirds, Mode B balanced duets (character left at $x=0.32$, stamp right at $x=0.72$).
+5. **12-Column Grid & Spatial Hierarchy**: 3-layer parallax, rule of thirds, Mode B balanced duets (asset left at $x=0.32$, stamp right at $x=0.72$).
 6. **Zero-Collision Geometry**: True non-zero bounding boxes for all cards and stamps; 45–55px vertical clearance for ASS subtitles and labels.
 7. **Natural Soft Shadows & Adaptive Die-Cut Outlines**: Two-tier (tight contact 0.16 + soft ambient 0.12), warm-tinted, canvas padded so the blur fades to zero: never a hard cut edge (`kit.shadow`, `kit.ground_shadow`). All cutouts feature crisp white/adaptive contour outlines. Zero detached floor ovals.
 8. **Professional & Meaningful Motion**: Subtle 4% slow drift camera zoom, smooth cubic fades, spring pops with settle (0.88 -> 1.0), gentle rise, drawing reveals. ZERO irritating continuous shaking or jitter loops.

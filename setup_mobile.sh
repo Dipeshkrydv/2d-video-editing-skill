@@ -48,7 +48,7 @@ fi
 
 # 4. Register Gemini & Claude Directorial Rules into Workspace & System
 echo "Registering Conversational Intake Rules & Agent Directives..."
-for rule_file in GEMINI.md AGENTS.md AGENT.md SKILL.md CLAUDE.md CREATIVE_DIRECTOR.md CHARACTER_MODE.md; do
+for rule_file in GEMINI.md AGENTS.md AGENT.md SKILL.md CLAUDE.md CREATIVE_DIRECTOR.md; do
     if [ -f "$STUDIO_DIR/$rule_file" ] && [ ! -f "$PWD/$rule_file" ]; then
         cp "$STUDIO_DIR/$rule_file" "$PWD/$rule_file"
     fi
