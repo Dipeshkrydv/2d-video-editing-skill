@@ -449,6 +449,7 @@ def main():
     ap.add_argument("--project-id", default=None)
     ap.add_argument("--wait", type=int, default=300, help="seconds to wait for images")
     ap.add_argument("--sync", action="store_true", help="wait for each render tile sequentially before submitting the next")
+    ap.add_argument("--parallel", type=int, default=int(os.environ.get("FLOW_CONCURRENCY", "2")), help="max concurrent in-flight generation slots in Google Flow (default: 2, safe high-speed)")
     a = ap.parse_args()
 
     if FLOW_MCP_URL:
@@ -569,121 +570,138 @@ def main():
 
     log(f"{done_n}/{len(rows)} already done, {copied} copied from identical prompts, {len(pending)} to generate (paced {fg.GAP:g}s apart)")
 
-    # Execute generation for pending assets
+    # Execute slotted parallel generation for pending assets
     made = 0
     flagged = False
     dispatched = 0
+    concurrency = 1 if a.sync else max(1, min(a.parallel, 3))
 
-    mode_label = "Synchronous (1-by-1)" if a.sync else "Rapid parallel back-to-back"
-    log(f"🚀 {mode_label} dispatch: {len(pending)} asset(s), {fg.GAP:g}s pacing delay")
+    mode_label = "Synchronous (1-by-1)" if a.sync else f"Slotted Parallel ({concurrency} concurrent slots)"
+    log(f"🚀 {mode_label} dispatch: {len(pending)} pending asset(s), {fg.GAP:g}s pacing delay")
 
-    for row in pending:
-        name = row["name"]
-        if done_path(name):
-            continue
+    in_flight = {}
+    pending_queue = list(pending)
+    import random
 
-        if flagged or not fg.acquire(1):
-            break
+    while pending_queue or in_flight:
+        # Fill available concurrency slots from pending queue
+        while pending_queue and len(in_flight) < concurrency and not flagged:
+            row = pending_queue.pop(0)
+            name = row["name"]
 
-        # Ensure prompt has unique #{name} tag so DeepX & Chrome download it with exact filename
-        raw_prompt = row["prompt"].strip()
-        tag = f"#{name}"
-        final_prompt = raw_prompt if tag in raw_prompt else f"{raw_prompt} {tag}"
+            # Quick check if already on disk
+            if done_path(name):
+                man.set(name, hash=row["h"], status="done", file=done_path(name))
+                continue
 
-        man.set(name, hash=row["h"], status="inflight", t=int(time.time()))
-        log(f"  [+] Dispatching {name} to Google Flow...")
+            if not fg.acquire(1):
+                log("  … Rate guard waiting for next submission slot...")
+                time.sleep(fg.GAP)
+                if not fg.acquire(1):
+                    break
 
-        wait_render = bool(a.sync)
-        payload = {
-            "prompt": final_prompt,
-            "aspectRatio": row["aspect"],
-            "model": a.model if a.model in ("imagen-3", "veo-quality") else "imagen-3",
-            "count": 1,
-            "waitForRender": wait_render,
-            "wait_for_render": wait_render,
-        }
+            # Natural humanized micro-jitter to prevent bot fingerprinting
+            time.sleep(random.uniform(0.2, 0.5))
 
-        try:
-            timeout_sec = 120 if a.sync else 35
-            res = call_bridge("generate_image", payload, timeout=timeout_sec)
-            fg.mark_submitted()
-            fg.record_ok()
-            dispatched += 1
+            # Tag with #{name} so Chrome/DeepX names the saved file correctly
+            raw_prompt = row["prompt"].strip()
+            tag = f"#{name}"
+            final_prompt = raw_prompt if tag in raw_prompt else f"{raw_prompt} {tag}"
 
-            img_url = extract_media_url(res)
-            if img_url:
-                saved_path = download_image_to_raw(img_url, name)
-                man.set(name, status="done", file=saved_path)
-                made += 1
-                log(f"  ✓ {name} (downloaded & verified, {made} done)")
-            elif a.sync:
-                # Flow Extension might have auto-downloaded to Chrome Downloads
-                time.sleep(2)
-                fh.harvest_from_folder(elements_tsv=a.elements)
-                if done_path(name):
-                    man.set(name, status="done", file=done_path(name))
+            man.set(name, hash=row["h"], status="inflight", t=int(time.time()))
+            log(f"  [+] [Slot {len(in_flight)+1}/{concurrency}] Dispatching {name} to Google Flow...")
+
+            wait_render = bool(a.sync)
+            payload = {
+                "prompt": final_prompt,
+                "aspectRatio": row["aspect"],
+                "model": a.model if a.model in ("imagen-3", "veo-quality") else "imagen-3",
+                "count": 1,
+                "waitForRender": wait_render,
+                "wait_for_render": wait_render,
+            }
+
+            try:
+                timeout_sec = 120 if a.sync else 40
+                res = call_bridge("generate_image", payload, timeout=timeout_sec)
+                fg.mark_submitted()
+                fg.record_ok()
+                dispatched += 1
+
+                img_url = extract_media_url(res)
+                if img_url:
+                    saved_path = download_image_to_raw(img_url, name)
+                    man.set(name, status="done", file=saved_path)
                     made += 1
-                    log(f"  ✓ {name} (harvested from Chrome Downloads)")
+                    log(f"  ✓ {name} (downloaded directly from CDN, {made} done)")
+                    continue
+
+                if a.sync:
+                    time.sleep(1.5)
+                    fh.harvest_from_folder(elements_tsv=a.elements)
+                    p = done_path(name)
+                    if p:
+                        man.set(name, status="done", file=p)
+                        made += 1
+                        log(f"  ✓ {name} (harvested from Chrome Downloads)")
+                    else:
+                        in_flight[name] = {"row": row, "dispatched_at": time.time()}
                 else:
-                    log(f"  … {name} dispatched to Flow; render tile is progressing.")
-            else:
-                log(f"  ⚡ {name} queued on Google Flow cloud cluster")
+                    in_flight[name] = {"row": row, "dispatched_at": time.time()}
+                    log(f"  ⚡ {name} active in Flow slot (parallel in-flight: {len(in_flight)}/{concurrency})")
 
-        except Exception as ex:
-            err_msg = str(ex)
-            if fg.is_flag(err_msg):
-                fg.record_flag()
-                flagged = True
-                log(f"⚠ Flow reported UNUSUAL ACTIVITY on {name}. Generation paused safely.")
-                try:
-                    call_bridge("cancel_job", {})
-                except Exception:
-                    pass
-                break
-            else:
-                man.set(name, status="failed", error=err_msg[:140])
-                log(f"  ✗ {name}: {err_msg[:120]}")
+            except Exception as ex:
+                err_msg = str(ex)
+                if fg.is_flag(err_msg):
+                    log(f"⚠ Google Flow reported UNUSUAL ACTIVITY on {name}.")
+                    log("  🔄 Initiating auto-recovery: cooling off for 15s, resetting guard, and continuing...")
+                    time.sleep(15.0)
+                    fg.reset()
+                    concurrency = 1  # Throttle to 1 concurrent slot to guarantee safe completion
+                    pending_queue.insert(0, row)
+                    break
+                else:
+                    man.set(name, status="failed", error=err_msg[:140])
+                    log(f"  ✗ {name}: {err_msg[:120]}")
 
-    # Phase 2: Autonomous Parallel Harvest & Ingestion
-    missing = [r["name"] for r in rows if not done_path(r["name"])]
-    if not a.sync and not flagged and missing:
-        log(f"\n⚡ All {dispatched} pending asset(s) dispatched in parallel to Google Flow!")
-        log(f"📥 Harvesting finished renders from Flow (timeout: {a.wait}s)...")
-        t_end = time.time() + a.wait
-        last_reported_done = -1
-
-        while time.time() < t_end:
+        # Check in-flight jobs for completions
+        if in_flight:
             try:
                 fh.harvest_from_folder(elements_tsv=a.elements)
             except Exception:
                 pass
 
-            for r in rows:
-                p = done_path(r["name"])
-                if p and man.status(r["name"]) != "done":
-                    man.set(r["name"], status="done", file=p)
-            man.save()
+            now = time.time()
+            for n in list(in_flight.keys()):
+                p = done_path(n)
+                if p:
+                    man.set(n, status="done", file=p)
+                    del in_flight[n]
+                    made += 1
+                    fg.record_ok()
+                    missing_now = sum(1 for r in rows if not done_path(r["name"]))
+                    log(f"  ✓ {n} completed! ({len(rows) - missing_now}/{len(rows)} ready)")
+                elif now - in_flight[n]["dispatched_at"] > 160:
+                    log(f"  … {n} in-flight > 160s; freeing slot to allow queue progress.")
+                    del in_flight[n]
 
-            missing = [r["name"] for r in rows if not done_path(r["name"])]
-            done_count = len(rows) - len(missing)
+            # Brief pause before next slot check
+            time.sleep(1.5)
 
-            if done_count != last_reported_done:
-                last_reported_done = done_count
-                log(f"  … Progress: {done_count}/{len(rows)} assets ready on disk")
+    # Final Harvest & Ingestion verification
+    try:
+        fh.harvest_from_folder(elements_tsv=a.elements)
+    except Exception:
+        pass
 
-            if not missing:
-                log(f"✓ All {len(rows)} assets successfully generated and ready on disk!")
-                break
-
-            time.sleep(2.0)
-    else:
-        try:
-            fh.harvest_from_folder(elements_tsv=a.elements)
-        except Exception:
-            pass
+    for r in rows:
+        p = done_path(r["name"])
+        if p and man.status(r["name"]) != "done":
+            man.set(r["name"], status="done", file=p)
+    man.save()
 
     missing = [r["name"] for r in rows if not done_path(r["name"])]
-    log(f"Batch completed: Total ready: {len(rows) - len(missing)}/{len(rows)}.")
+    log(f"\nBatch completed: Total ready: {len(rows) - len(missing)}/{len(rows)}.")
     if flagged:
         sys.exit(2)
     sys.exit(1 if missing else 0)

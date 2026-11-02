@@ -26,7 +26,7 @@ def cartesia_generate_voice(
     voice: str = "rohan",
     emotion: str = "neutral",
     language: str = "hi",
-    output_path: str = "/home/cat/Music/xdeepfreevideogeneration/VO.wav",
+    output_path: str = "VO.wav",
     model: str = "sonic-3.6"
 ) -> str:
     """Generate ultra-realistic voiceover using Cartesia Sonic 3.6 API with emotion styling.
@@ -50,7 +50,7 @@ def cartesia_generate_voice(
         )
         return json.dumps({
             "status": "success",
-            "message": f"Successfully generated {res["duration_seconds"]}s voiceover in {res["generation_time_seconds"]}s with emotion "{res["emotion"]}"",
+            "message": f"Successfully generated {res['duration_seconds']}s voiceover in {res['generation_time_seconds']}s with emotion '{res['emotion']}'",
             "output_path": res["output_path"],
             "duration_seconds": res["duration_seconds"],
             "generation_time_seconds": res["generation_time_seconds"],

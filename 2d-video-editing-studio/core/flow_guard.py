@@ -30,7 +30,7 @@ try:                                    # Linux / macOS / Android
         fcntl.flock(fh, fcntl.LOCK_EX)
 
     def _unlock(fh):
-        _unlock(fh)
+        fcntl.flock(fh, fcntl.LOCK_UN)
 except ImportError:                     # Windows
     import msvcrt
 
@@ -43,7 +43,7 @@ except ImportError:                     # Windows
         msvcrt.locking(fh.fileno(), msvcrt.LK_UNLCK, 1)
 
 LEDGER = os.path.expanduser(os.environ.get("FLOW_GUARD_LEDGER", "~/.deepesh_flow_guard.json"))
-GAP = float(os.environ.get("FLOW_GUARD_GAP", "0.8"))
+GAP = float(os.environ.get("FLOW_GUARD_GAP", "1.2"))
 MAX_ITEMS = 1                      # one prompt per submission; the gap is what paces Flow
 FLAG_MARKERS = ("UNUSUAL_ACTIVITY", "unusual activity")
 

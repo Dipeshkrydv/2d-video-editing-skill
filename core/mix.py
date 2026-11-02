@@ -100,14 +100,15 @@ class Resolver:
             if self.words:
                 return max(0.0, self.words[-1][0] + off)
             return max(0.0, off)
+        clean_base = clean(base)
         # Search forward from self.pos
         for k in range(self.pos, len(self.words)):
-            if base in self.words[k][1]:
+            if base in self.words[k][1] or (clean_base and clean_base in self.words[k][1]):
                 self.pos = k
                 return max(0.0, self.words[k][0] + off)
         # Search across all words if not found forward
         for k in range(0, len(self.words)):
-            if base in self.words[k][1]:
+            if base in self.words[k][1] or (clean_base and clean_base in self.words[k][1]):
                 self.pos = k
                 return max(0.0, self.words[k][0] + off)
         if os.environ.get("MIX_STRICT") == "1":

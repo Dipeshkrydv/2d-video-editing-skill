@@ -19,10 +19,9 @@ DEFAULT_API_KEY = os.environ.get("CARTESIA_API_KEY", "")
 API_VERSION = "2024-06-10"
 BASE_URL = "https://api.cartesia.ai"
 
-# Top Recommended Voice Characters
+# Top Recommended Standard Public Voice Characters
 POPULAR_VOICES = {
-    # Recommended Primary Voices
-    "deepesh": "e42155ea-30ec-47bb-9f39-58f5816571f5",  # Deepesh - User Cloned Voice
+    # Recommended Primary Voices (Public Cartesia Library)
     "rohan": "4877b818-c7fe-4c89-b1cf-eadf8e23da72",    # Rohan - Steady Communicator (Hindi Male)
     "dev": "910fb75e-1d20-4840-ac63-ac6b26a71bdc",      # Dev - Friendly Host (Hindi Male)
     "neha": "47f3bbb1-e98f-4e0c-92c5-5f0325e1e206",     # Neha - Virtual Assistant (Hindi Female)
@@ -39,6 +38,10 @@ POPULAR_VOICES = {
     "barbershop": "a0e99841-438c-4a64-b679-ae501e7d6091",# Barbershop Man (English)
     "british": "79a125e8-cd45-4c13-8a67-188112f4dd22"   # British Narrator
 }
+
+# Optional user-configured cloned voice loaded securely from environment variable
+if os.environ.get("CARTESIA_CUSTOM_VOICE_ID"):
+    POPULAR_VOICES["custom"] = os.environ.get("CARTESIA_CUSTOM_VOICE_ID").strip()
 
 # Emotion Mappings to Cartesia Canonical Controls
 EMOTION_MAP = {
