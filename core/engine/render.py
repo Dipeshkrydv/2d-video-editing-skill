@@ -1377,10 +1377,21 @@ def check(edit):
         e.warnings.append(f"scenes {', '.join(same)} repeat the previous scene's layout -- vary layouts for rhythm")
     # ---- anti-clutter check: no scene should pile > 2 competing text elements at once
     text_types = {"title", "keyword", "stamp", "callout", "lower_third", "quote"}
+    is_visual_style = e.style_name in ("sticker", "stickman", "stickman_hybrid", "doodle", "noir", "crime", "suspense")
     for sc in e.scenes:
         n_text = sum(1 for it in sc["items"] if it.type in text_types)
         if n_text > 2:
             e.warnings.append(f"scene {sc['id']}: text clutter ({n_text} competing text items) -- obey Rule of One Main Idea per beat!")
+        if is_visual_style:
+            for it in sc["items"]:
+                txt = it.d.get("text") or ""
+                words = txt.split()
+                if it.type in ("title", "keyword", "quote", "callout") and len(words) > 6:
+                    e.warnings.append(
+                        f"scene {sc['id']}: book-style typography ('{txt[:32]}...' has {len(words)} words) "
+                        f"-- in {e.style_name} style, typography is only for NAMING (labels) or HIGHLIGHTING (1-4 words). "
+                        f"Heavy typography belongs exclusively in box style!"
+                    )
     if e.dur / max(1, len(events)) > 2.0:
         e.warnings.append(f"visual density too low ({e.dur / max(1, len(events)):.1f}s per beat, target ≤ 2.0s): "
                           f"add cuts, keywords, cut-outs, callouts -- see PLAN.md (`studio.py plan`)")

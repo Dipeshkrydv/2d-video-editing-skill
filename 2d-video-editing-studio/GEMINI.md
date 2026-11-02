@@ -106,6 +106,15 @@ Every AI agent (Antigravity, Claude Code, Gemini CLI, Cursor, Windsurf, or termi
      - Arcade: `rpg` / `rpg_box` (16-bit dialogue window with double border).
    - Give the viewer's eyes breathing room: alternate high-density fast cuts (1.0–1.6s) with breathing holds (2.2–3.0s).
 
+9. **Strict Typography Restraint Law (Anti-Book Typography Mandate)**:
+   - **Stickman Style, Sticker Style, and Suspense Noir**: **STRICTLY ZERO BOOK-STYLE / PARAGRAPH TYPOGRAPHY**.
+     - Excessive text, book-like paragraphs, and multi-line body sentences look amateurish, clutter the frame, and destroy cinematic pacing.
+     - In these styles, typography is exclusively restricted to:
+       1. **Naming**: Short, punchy 1–3 word labels under visual assets (e.g., `label: "Free Will?"`, `label: "Dopamine Loop"`, `label: "Case File #409"`).
+       2. **Highlighting**: Single punchy keyword pills or marker reveals (e.g., `*Again*`, `35,000 Choices`, `CLASSIFIED` stamp).
+     - Never render multi-line explanatory paragraphs or book reading blocks. The spoken voiceover tells the story; the visual scenes and cutouts explain the concept!
+   - **Box Style**: Typography-heavy compositions (structured stat cards, comparison grids, multi-line data points, list cards, quote blocks) belong **EXCLUSIVELY in Box Style** (`box`) and `kinetic_typography`.
+
 ---
 
 ## ⚡ 0. EXECUTIVE QUICKSTART: WHAT YOU MUST KNOW ON TURN 1
