@@ -56,7 +56,7 @@ STYLE = {
         "accent3": (42, 115, 205),         # cobalt blue ink
         "panel": (255, 252, 244, 240),
         "stamp_color": (214, 60, 40), "string_color": (24, 22, 20),
-        "caption": "plate",
+        "caption": "pill",
         "asset_frame": "clean", "photo_frame": "flat",
         "label_style": "plain",
         "halftone": False, "photo_halftone": False, "dot": 7,
@@ -65,21 +65,21 @@ STYLE = {
         "letterbox": 0.0, "grade": "eq=saturation=1.05", "grain": 0, "vignette": False,
         "transition": "slide", "camera": "drift", "paper": True,
         "kicker_prefix": "",
-        # colour-block palette (doodle titles): brown/white, yellow/brown, white/brown, black/yellow
-        "blocks": [((94, 58, 36), (255, 255, 255)), ((255, 228, 0), (94, 58, 36)),
-                   ((255, 255, 255), (94, 58, 36)), ((24, 22, 20), (255, 228, 0))],
-        "boxes": ["doodle_circle", "sticky", "note", "tag", "marker"],
+        # colour-block palette: rich modern saturated contrast (vibrant blue/white, amber/dark, coral/white, white/cobalt)
+        "blocks": [((35, 95, 225), (255, 255, 255)), ((255, 210, 20), (24, 22, 20)),
+                   ((235, 75, 45), (255, 255, 255)), ((255, 255, 255), (35, 80, 200))],
+        "boxes": ["pill", "marker", "doodle_circle", "note", "tag"],
     },
     "prompt": {
         "clarity": (
             "ONE expressive modern 2D storytelling illustration, Casually Explained and Alan Becker animation style, "
             "clean white circular head, bold black ink contour lines, highly expressive eyebrows and smirk, "
             "wearing modern casual attire (oversized hoodie, rolled denim shorts, sneakers) or thematic explorer outfit, "
-            "clean 2D cel shading, selective color contrast where the character pops vibrantly, crisp vector clarity"
+            "clean 2D cel shading, vibrant colorful contrast where characters and environments pop with high saturation, crisp vector clarity"
         ),
         "medium": "modern 2D digital animation illustration, expressive comic stickman character, clean 2D vector art",
         "lighting": "cinematic directional light with soft cel shadows, warm sunlit pools or crisp flat studio light",
-        "palette": "bold black ink contours, clean white head, saturated accent clothing (orange, cobalt blue, grey, denim), slate monochrome environments",
+        "palette": "bold black ink contours, clean white head, rich saturated attire (cobalt blue, fiery orange, emerald green, denim), warm vibrant colorful 2D cel-shaded environment with lively background tones and golden lighting",
         "camera": {"shot": "centred hero shot", "lens": "2D animation camera", "angle": "straight-on",
                    "movement": "none"},
         "mood": "funny, curious, satirical, storytelling, educational",
@@ -236,9 +236,9 @@ EXAMPLES = [
     "doodle circled question title: RECIPES['pop_title']",
 ]
 
-# ---- asset plan: modern stickman explainer (25% stylized 2D scenes, 65% expressive stick assets) ---
+# ---- asset plan: modern stickman explainer (35% stylized 2D scenes, 55% expressive stick assets) ---
 BEAT_S = 1.3
-MIX = {"scene": 0.25, "asset": 0.65, "reuse": 0.02, "text": 0.08}
+MIX = {"scene": 0.35, "asset": 0.55, "reuse": 0.02, "text": 0.08}
 
 MENU = {
     "scene": ["hand-drawn 2D landscape (cliff overlooking mountains, canyon rapids, desert path)",

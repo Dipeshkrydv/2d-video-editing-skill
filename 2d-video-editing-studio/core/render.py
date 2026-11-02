@@ -342,23 +342,46 @@ def make_forensic_stamp(text, w, h, color=RED, angle=-11.0):
     d.rounded_rectangle([6, 6, w - 6, h - 6], radius=14, outline=color + (235,), width=6)
     d.rounded_rectangle([14, 14, w - 14, h - 14], radius=9, outline=color + (175,), width=2)
     
-    clean_text = text.upper().replace("_", " ").strip()
-    font_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "fonts", "english", "Anton-Regular.ttf")
-    if not os.path.exists(font_path):
-        font_path = "/home/cat/.local/share/fonts/xdeep/Anton-Regular.ttf"
-    if not os.path.exists(font_path):
-        font_path = "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"
+    clean_text = text.replace("_", " ").strip()
+    is_dev = bool(re.search(r"[\u0900-\u097F\uA8E0-\uA8FF\u1CD0-\u1CFF]", clean_text))
+    if not is_dev:
+        clean_text = clean_text.upper()
+    
+    base_fonts = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "fonts")
+    if is_dev:
+        candidates = [
+            os.path.join(base_fonts, "hindi", "NotoSansDevanagari-VF.ttf"),
+            os.path.join(base_fonts, "hindi", "Baloo2-Bold.ttf"),
+            os.path.join(base_fonts, "hindi", "Khand-Bold.ttf"),
+            "/system/fonts/NotoSansDevanagari-Bold.ttf",
+            "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Bold.ttf"
+        ]
+    else:
+        candidates = [
+            os.path.join(base_fonts, "english", "Anton-Regular.ttf"),
+            "/home/cat/.local/share/fonts/xdeep/Anton-Regular.ttf",
+            os.path.join(base_fonts, "english", "LiberationSans-Bold.ttf"),
+            "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"
+        ]
+    font_path = next((p for p in candidates if os.path.exists(p)), None)
         
     avail_w = w - 44
     avail_h = h - 28
     font_size = max(18, int(h * 0.48))
     
-    while font_size >= 16:
+    def _load_font(sz):
+        if not font_path:
+            return ImageFont.load_default()
         try:
-            font = ImageFont.truetype(font_path, font_size)
+            return ImageFont.truetype(font_path, sz, layout_engine=ImageFont.Layout.RAQM)
         except Exception:
-            font = ImageFont.load_default()
-            break
+            try:
+                return ImageFont.truetype(font_path, sz)
+            except Exception:
+                return ImageFont.load_default()
+
+    while font_size >= 16:
+        font = _load_font(font_size)
         bbox = d.textbbox((0, 0), clean_text, font=font)
         tw = bbox[2] - bbox[0]
         th = bbox[3] - bbox[1]
@@ -366,11 +389,7 @@ def make_forensic_stamp(text, w, h, color=RED, angle=-11.0):
             break
         font_size -= 2
         
-    try:
-        font = ImageFont.truetype(font_path, font_size)
-    except Exception:
-        font = ImageFont.load_default()
-        
+    font = _load_font(font_size)
     d.text((w / 2, h / 2), clean_text, fill=color + (245,), font=font, anchor="mm")
     
     # Procedural distressed stamp ink texture

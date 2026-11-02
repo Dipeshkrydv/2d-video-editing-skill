@@ -191,7 +191,7 @@ PLANS["noir"] = dict(DEFAULT_PLAN, beat_s=1.6, mix={"scene": 0.65, "asset": 0.25
 PLANS["crime"] = PLANS["noir"]
 PLANS["suspense"] = PLANS["noir"]
 PLANS["box"] = dict(DEFAULT_PLAN, beat_s=1.5, mix={"scene": 0.30, "asset": 0.45, "reuse": 0.05, "text": 0.20})
-PLANS["sticker"] = dict(DEFAULT_PLAN, beat_s=1.3, mix={"scene": 0.0, "asset": 0.88, "reuse": 0.0, "text": 0.12})
+PLANS["sticker"] = dict(DEFAULT_PLAN, beat_s=1.3, mix={"scene": 0.35, "asset": 0.55, "reuse": 0.02, "text": 0.08})
 PLANS["stickman"] = PLANS["sticker"]
 PLANS["stickman_hybrid"] = PLANS["sticker"]
 PLANS["doodle"] = PLANS["sticker"]

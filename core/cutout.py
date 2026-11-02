@@ -6,31 +6,62 @@ white *inside* the object stays opaque.
 usage:  python cutout.py <src_dir> <dst_dir>
         python cutout.py --demo        # self-check, no Flow needed
 """
-import os, sys, glob
+import os, sys, glob, math
 import numpy as np
 from PIL import Image
 from scipy import ndimage
 
 WHITE_LO, WHITE_HI = 228, 248      # alpha ramps from 1 to 0 across this band
-MIN_PIECE = 0.02                   # drop components under 2% of the biggest:
-                                   # the watermark and stray specks, never a real
-                                   # second piece (three grains, a boulder cluster)
+MIN_SPECK_PIXELS = 10              # Only drop tiny single-pixel sensor noise (<10px)
 
 
 def drop_specks(alpha):
-    """Remove everything much smaller than the main subject: the Gemini sparkle
-    in the corner, and any rim crumbs the threshold left behind. Both extraction
-    paths need this, so it lives in one place."""
-    # Threshold low, not at 0.5: the Gemini sparkle is translucent, so it lands
-    # around alpha 0.3 and a 0.5 cut walks straight past it, leaving a faint
-    # ghost in the corner. A real object's soft edge is connected to its body,
-    # so a low threshold costs nothing.
-    solid = alpha > 0.1
+    """Safely removes stray dust specks and corner watermark crumbs without
+    accidentally cutting off character eyebrows, detached hands, eyes, drawstrings,
+    or small storytelling props."""
+    solid = alpha > 0.08
     lbl, n = ndimage.label(solid)
     if n <= 1:
         return alpha
+
+    h, w = alpha.shape
     sizes = ndimage.sum(solid, lbl, range(1, n + 1))
-    keep = 1 + np.flatnonzero(sizes >= sizes.max() * MIN_PIECE)
+    max_sz = sizes.max()
+    
+    # Bounding boxes of components
+    objects = ndimage.find_objects(lbl)
+    keep = []
+    
+    # Main component center
+    main_idx = int(np.argmax(sizes))
+    main_slice = objects[main_idx]
+    main_cy = (main_slice[0].start + main_slice[0].stop) / 2.0
+    main_cx = (main_slice[1].start + main_slice[1].stop) / 2.0
+    
+    for i in range(1, n + 1):
+        sz = sizes[i - 1]
+        sl = objects[i - 1]
+        if sl is None:
+            continue
+            
+        # Always keep significant pieces
+        if sz >= max_sz * 0.005 or sz >= 40:
+            keep.append(i)
+            continue
+            
+        # Tiny pieces (<40 px): check if near the main subject (e.g. eyes, eyebrows, fingers, dots)
+        cy = (sl[0].start + sl[0].stop) / 2.0
+        cx = (sl[1].start + sl[1].stop) / 2.0
+        dist_to_main = math.hypot((cy - main_cy) / h, (cx - main_cx) / w)
+        
+        # If in the extreme corners (distance > 0.48 from center) and tiny (< 25px), it's a watermark speck
+        is_corner = (cx < 0.06 * w or cx > 0.94 * w) and (cy < 0.06 * h or cy > 0.94 * h)
+        if sz >= MIN_SPECK_PIXELS and not is_corner:
+            keep.append(i)
+
+    if not keep:
+        keep = [main_idx + 1]
+
     return np.where(np.isin(lbl, keep), alpha, 0.0)
 
 

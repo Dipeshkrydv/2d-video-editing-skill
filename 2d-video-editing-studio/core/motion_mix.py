@@ -60,13 +60,26 @@ def natural_shadow_under(sprite, off=(0, 8), blur=16, strength=0.14, tint=(26, 2
 
 
 
-def resolve_font(style="bold", size=48):
-    """Resolves true type font from fonts directory or system with heavy bold weight prioritization."""
+DEV_RE = re.compile(r"[\u0900-\u097F\uA8E0-\uA8FF\u1CD0-\u1CFF]")
+
+def resolve_font(style="bold", size=48, text=""):
+    """Resolves true type font from fonts directory or system with heavy bold weight prioritization and full Devanagari support."""
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     fonts_dir = os.path.join(base_dir, "fonts")
+    is_dev = bool(text and DEV_RE.search(text)) or style in ("hindi", "devanagari")
     
     candidates = []
-    if style in ("serif", "editorial", "luxury"):
+    if is_dev:
+        candidates += [
+            os.path.join(fonts_dir, "hindi", "NotoSansDevanagari-VF.ttf"),
+            os.path.join(fonts_dir, "hindi", "Baloo2-Bold.ttf"),
+            os.path.join(fonts_dir, "hindi", "Baloo2-ExtraBold.ttf"),
+            os.path.join(fonts_dir, "hindi", "Khand-Bold.ttf"),
+            os.path.join(fonts_dir, "Kalam-Bold.ttf"),
+            "/system/fonts/NotoSansDevanagari-Bold.ttf",
+            "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Bold.ttf"
+        ]
+    elif style in ("serif", "editorial", "luxury"):
         candidates += [
             os.path.join(fonts_dir, "english", "PlayfairDisplay-Bold.ttf"),
             os.path.join(fonts_dir, "english", "Lora-Bold.ttf"),
@@ -119,9 +132,12 @@ def resolve_font(style="bold", size=48):
     for p in candidates:
         if os.path.exists(p):
             try:
-                return ImageFont.truetype(p, size)
+                return ImageFont.truetype(p, size, layout_engine=ImageFont.Layout.RAQM)
             except Exception:
-                pass
+                try:
+                    return ImageFont.truetype(p, size)
+                except Exception:
+                    pass
     return ImageFont.load_default()
 
 def parse_color_spec(spec):
@@ -180,24 +196,30 @@ def draw_gradient_text(
     
     lines = clean_text.replace("//", "\n").split("\n")
     
+    is_dev = bool(DEV_RE.search(clean_text))
     # Dynamic auto-shrink to guarantee fitting within 1180px safe width
     max_allowed_w = 1180
     while font_size > 28:
-        font = resolve_font(font_style, font_size)
+        font = resolve_font(font_style, font_size, text=clean_text)
         line_boxes = []
         max_w = 0
         total_h = 0
         line_h_base = 0
         
         for line in lines:
-            w_cur = 0
-            h_cur = 0
-            for ch in line:
-                bbox = d_dummy.textbbox((0, 0), ch, font=font)
-                cw = bbox[2] - bbox[0]
-                ch_h = bbox[3] - bbox[1]
-                w_cur += cw + tracking
-                h_cur = max(h_cur, ch_h)
+            if is_dev:
+                bbox = d_dummy.textbbox((0, 0), line, font=font)
+                w_cur = bbox[2] - bbox[0]
+                h_cur = bbox[3] - bbox[1]
+            else:
+                w_cur = 0
+                h_cur = 0
+                for ch in line:
+                    bbox = d_dummy.textbbox((0, 0), ch, font=font)
+                    cw = bbox[2] - bbox[0]
+                    ch_h = bbox[3] - bbox[1]
+                    w_cur += cw + tracking
+                    h_cur = max(h_cur, ch_h)
             line_boxes.append((line, w_cur, h_cur))
             max_w = max(max_w, w_cur)
             line_h_base = max(line_h_base, h_cur)
@@ -219,11 +241,14 @@ def draw_gradient_text(
     for line, lw, lh in line_boxes:
         # Center-align multi-line gradient text
         cur_x = 20 + max(0, int((max_w - lw) / 2))
-        for ch in line:
-            bbox = d_dummy.textbbox((0, 0), ch, font=font)
-            cw = bbox[2] - bbox[0]
-            d_mask.text((cur_x, cur_y), ch, fill=255, font=font)
-            cur_x += cw + tracking
+        if is_dev:
+            d_mask.text((cur_x, cur_y), line, fill=255, font=font)
+        else:
+            for ch in line:
+                bbox = d_dummy.textbbox((0, 0), ch, font=font)
+                cw = bbox[2] - bbox[0]
+                d_mask.text((cur_x, cur_y), ch, fill=255, font=font)
+                cur_x += cw + tracking
         cur_y += int(lh * 1.25)
         
     # 2. Build smooth linear gradient texture
@@ -326,7 +351,7 @@ def draw_mix_match_text(
             f_size = base_font_size
             if "pill" in tag: f_size = int(base_font_size * 0.85)
             
-            font = resolve_font(f_style, f_size)
+            font = resolve_font(f_style, f_size, text=txt)
             bbox = d_dummy.textbbox((0, 0), txt, font=font)
             tw = bbox[2] - bbox[0]
             th = bbox[3] - bbox[1]
@@ -459,13 +484,13 @@ def draw_pinned_gradient_card(
             subtitle = os.environ.get("CARD_SUBTITLE", "KEY CONCEPT")
             
     # Render Subtitle Pill Badge
-    sub_font = resolve_font("bold", 24)
+    sub_font = resolve_font("bold", 24, text=subtitle)
     s_bbox = cd.textbbox((0, 0), subtitle, font=sub_font)
     sw = s_bbox[2] - s_bbox[0]
     sh = s_bbox[3] - s_bbox[1]
     
     if sw > width - 80:
-        sub_font = resolve_font("bold", 20)
+        sub_font = resolve_font("bold", 20, text=subtitle)
         s_bbox = cd.textbbox((0, 0), subtitle, font=sub_font)
         sw = s_bbox[2] - s_bbox[0]
         sh = s_bbox[3] - s_bbox[1]
@@ -574,7 +599,7 @@ def draw_highlighter_text(
     padding: int = 40
 ) -> Image.Image:
     """Draws multi-line text where designated words have vibrant marker highlighter boxes behind them."""
-    font = resolve_font("bold", font_size)
+    font = resolve_font("bold", font_size, text=" ".join(lines))
     dummy = Image.new("RGBA", (1, 1), (0, 0, 0, 0))
     d_dummy = ImageDraw.Draw(dummy)
     
@@ -627,7 +652,7 @@ def draw_doodle_annotated_text(
     marker_color=RED_MARKER
 ) -> Image.Image:
     """Draws typography with hand-drawn marker loop around a word and underline."""
-    font = resolve_font("bold", font_size)
+    font = resolve_font("bold", font_size, text=text)
     dummy = Image.new("RGBA", (1, 1), (0, 0, 0, 0))
     d_dummy = ImageDraw.Draw(dummy)
     
@@ -689,11 +714,11 @@ def draw_sticky_note(
     nd = ImageDraw.Draw(note_im)
     nd.rectangle([0, 0, width, 24], fill=(245, 235, 145, 255))
     
-    f_title = resolve_font("handwritten", 36)
+    f_title = resolve_font("handwritten", 36, text=title)
     nd.text((30, 45), title, fill=INK + (255,), font=f_title)
     nd.line([30, 90, width - 30, 90], fill=INK_MUTED + (120,), width=2)
     
-    f_body = resolve_font("handwritten", 28)
+    f_body = resolve_font("handwritten", 28, text=" ".join(bullets))
     by = 115
     for b in bullets:
         nd.text((30, by), b, fill=INK + (255,), font=f_body)
@@ -723,7 +748,8 @@ def draw_step_ladder(
     im = Image.new("RGBA", (total_w, total_h), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
     
-    f_step = resolve_font("bold", 24)
+    all_step_texts = " ".join(s.get("text", "") if isinstance(s, dict) else str(s) for s in steps)
+    f_step = resolve_font("bold", 24, text=all_step_texts)
     card_centers = []
     
     for i, s_data in enumerate(steps):
@@ -876,7 +902,7 @@ def composite_asset_typography_duet(
     
     # Badge Pill (e.g. "01 // DIRECTION" or "NEW FEATURE")
     if badge_text:
-        font_badge = resolve_font("mono", 20 if is_vertical else 22)
+        font_badge = resolve_font("mono", 20 if is_vertical else 22, text=badge_text)
         bbox = d.textbbox((0, 0), badge_text, font=font_badge)
         bw = bbox[2] - bbox[0] + 28
         bh = bbox[3] - bbox[1] + 16
@@ -896,7 +922,7 @@ def composite_asset_typography_duet(
     
     # Subtext (clean, readable editorial)
     if subtext:
-        font_sub = resolve_font("bold", sub_font_size)
+        font_sub = resolve_font("bold", sub_font_size, text=subtext)
         sub_col = (80, 75, 70, 240) if bg_theme == "paper" else (190, 195, 210, 240)
         words = subtext.split()
         sub_lines = []

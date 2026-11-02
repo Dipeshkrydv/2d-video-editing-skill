@@ -61,6 +61,20 @@ def key(src, pad=10, crop=True):
     mg_b = max(magentaness(B.reshape(1, 1, 3))[0, 0], 1.0)
     alpha = np.clip(1.0 - mg / mg_b, 0.0, 1.0)
 
+    # Topological reachability + color distance discriminator:
+    # Outer background is connected to image borders through magenta/near-magenta pixels.
+    # Enclosed holes (between legs, inside handle) must closely match B (dist < 45, mg > 110).
+    # Interior subject details (pink brain, purple clothes, red accents, metal wires)
+    # have dist_B > 60 and must NEVER be keyed out.
+    dist_B = np.sqrt(np.sum((a - B) ** 2, axis=-1))
+    h_im, w_im = a.shape[:2]
+    border_mask = np.zeros((h_im, w_im), dtype=bool)
+    border_mask[0, :] = border_mask[-1, :] = border_mask[:, 0] = border_mask[:, -1] = True
+    is_magenta_path = (mg > 12) | (dist_B < 55)
+    outer_bg = ndimage.binary_dilation(border_mask, mask=is_magenta_path, iterations=-1)
+    is_inner_hole = ~outer_bg & (dist_B < 45) & (mg > 110)
+    alpha = np.where(outer_bg, alpha, np.where(is_inner_hole, 0.0, 1.0))
+
     try:
         from core.cutout import drop_specks
     except ImportError:
