@@ -281,6 +281,33 @@ python studio.py render                    # -> master.mp4
 python mobile_run.py
 ```
 
+### 6.1 🎬 Video Preview (Post-Render Playback)
+
+After video generation is complete, the agent MUST present the rendered video(s) directly in the chat for instant in-place preview — both single video and multiple video outputs.
+
+#### Single Video Preview
+When a single `master.mp4` is rendered, display it immediately:
+```html
+<video src="/path/to/project/master.mp4" controls width="100%"></video>
+```
+
+#### Multiple Video / Multi-Format Preview
+When multiple videos are rendered (e.g. preview + master, or multiple cuts/segments), display each with format fallbacks:
+```html
+<video controls poster="thumb.jpg">
+  <source src="clip.webm" type="video/webm">
+  <source src="clip.mp4" type="video/mp4">
+</video>
+```
+
+#### Playback Rules
+- **Always present the video inline** after `python studio.py render` or `python studio.py preview` completes successfully.
+- Use the **actual absolute path** to the rendered file (e.g. `/data/user/0/com.termux/files/home/videos/my_video/master.mp4`).
+- For preview renders (540p draft), show with a note: `📺 Preview (540p draft)`.
+- For final renders (1080p master), show with: `🎬 Final Master (1080p)`.
+- If both `.webm` and `.mp4` exist, include both as `<source>` tags for maximum compatibility.
+- For multi-segment or multi-cut projects, present each video in order with a labeled heading.
+
 ---
 
 ## 📁 7. FILE SPECIFICATIONS & REGISTRY
