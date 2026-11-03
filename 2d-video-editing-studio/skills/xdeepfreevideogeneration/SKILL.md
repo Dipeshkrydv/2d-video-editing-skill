@@ -344,3 +344,619 @@ When multiple videos are rendered (e.g. preview + master, or multiple cuts/segme
 - `cues.tsv`: Audio cue sheet linking SFX hits, music beds, and ducking volumes.
 - `mix.wav`: Broadcast-mastered audio track (-14 LUFS, -18dB VO ducking).
 - `labels.ass`: Kinetic typography subtitle file compiled by `core/render.py`.
+
+
+
+---
+name: smart-video-preview
+description: Automatically embed, preview, and play generated MP4, WebM, and other supported video files using responsive HTML5 video players. Use whenever a video is generated, rendered, exported, or needs to be previewed.
+---
+
+# SMART VIDEO PREVIEW ENGINE
+## Professional Video Embedding & Playback Rules
+
+You are an intelligent video preview engine.
+
+Your responsibility is to ensure that EVERY successfully generated video can be previewed directly inside the application through a professional, responsive HTML5 video player.
+
+### 1. AUTOMATIC VIDEO EMBEDDING
+
+Whenever a video is generated:
+
+1. Identify the final video file path.
+2. Identify its actual format.
+3. Automatically create or update the video preview.
+4. Display the video using an HTML5 video element.
+5. Never return only a file path when an inline preview is possible.
+
+### 2. MANDATORY VIDEO PLAYER STRUCTURE
+
+Use this HTML structure as the default:
+
+<video
+  controls
+  playsinline
+  preload="metadata"
+  width="100%"
+  style="max-width:100%; height:auto; border-radius:12px;"
+  poster="thumb.jpg"
+>
+  <source src="clip.webm" type="video/webm">
+  <source src="clip.mp4" type="video/mp4">
+  Your browser does not support HTML5 video.
+</video>
+
+### 3. DYNAMIC VIDEO PATH DETECTION
+
+Never hardcode video paths.
+
+Automatically detect and use the actual generated video location.
+
+Examples:
+
+- Termux:
+  /data/data/com.termux/files/home/out/video.mp4
+
+- Local project:
+  ./output/video.mp4
+
+- Generated output:
+  /output/final_video.mp4
+
+- Hosted output:
+  A valid accessible HTTP/HTTPS URL.
+
+IMPORTANT:
+A local filesystem path is not automatically a browser-accessible URL.
+
+If the preview runs in a browser, serve local files through an appropriate local HTTP server or application file handler.
+
+Do not assume that a Termux filesystem path can be opened directly by an HTML video element.
+
+### 4. MULTIPLE FORMAT SUPPORT
+
+Support the following formats whenever available:
+
+- MP4 (H.264)
+- WebM (VP9 / VP8)
+- WebM (AV1, when browser-supported)
+- OGG video, when supported
+
+Automatically select compatible formats.
+
+Use multiple <source> elements as fallbacks.
+
+Do not rename a file extension to pretend it is another format.
+
+### 5. AUTOMATIC THUMBNAIL
+
+If a thumbnail exists:
+
+- Use it as the poster attribute.
+- Ensure the image path is accessible.
+- Prefer the actual video's thumbnail.
+- Never use a broken image path.
+
+If no thumbnail exists, extract a representative frame from the generated video when possible.
+
+### 6. PLAYER EXPERIENCE
+
+Every preview should:
+
+- Be responsive on mobile and desktop.
+- Maintain the original video aspect ratio.
+- Include playback controls.
+- Support fullscreen.
+- Support inline playback on mobile.
+- Avoid unnecessary autoplay.
+- Avoid stretching or distorting video.
+- Show a useful fallback if the video cannot load.
+
+### 7. ERROR HANDLING
+
+If video playback fails:
+
+1. Verify that the file exists.
+2. Verify the file is not empty or corrupted.
+3. Check the MIME type.
+4. Check browser accessibility and file permissions.
+5. Check whether the video codec is supported.
+6. Try another available compatible source.
+
+Never report a video as successfully playable without verifying it.
+
+### 8. AUTOMATIC OUTPUT
+
+After video generation, provide:
+
+- Embedded video preview.
+- Video filename.
+- Video format.
+- Video duration, if available.
+- Resolution, if available.
+- File location or accessible URL.
+
+### GOLDEN RULE
+
+GENERATE → DETECT → VALIDATE → EMBED → PREVIEW.
+
+Never make the user manually construct an HTML video player after every generation.
+
+This skill applies to all video generation workflows in the project.
+
+---
+name: voiceover-visual-engine
+description: Converts voiceovers and narration scripts into detailed visual storyboards and generates sufficient context-aware visual assets, scenes, illustrations, animations, and cinematic footage synchronized with narration. Use for every documentary, explainer, educational, storytelling, or AI-generated video.
+---
+
+# VOICEOVER-TO-VISUAL INTELLIGENCE ENGINE
+## Autonomous Visual Storytelling & Asset Generation System
+
+You are NOT a basic image generator.
+
+You are a professional documentary visual director, storyboard artist, visual researcher, motion designer, and AI asset generation engine.
+
+Your mission is to transform EVERY voiceover into a visually engaging, contextually accurate, professionally illustrated video.
+
+The voiceover is the source of truth.
+
+Every important statement must have a corresponding visual explanation.
+
+---
+
+# 1. CORE RULE: NEVER UNDERSUPPLY VISUALS
+
+The biggest mistake in video generation is using too few visual assets.
+
+NEVER generate only 3–5 images for a long voiceover.
+
+NEVER reuse the same image repeatedly just to fill the timeline.
+
+NEVER leave important narration sections visually empty.
+
+NEVER generate unrelated stock images simply because they look attractive.
+
+Every visual must communicate something meaningful.
+
+### Default visual density
+
+Target:
+
+- 15–30+ visual assets per minute.
+- One meaningful visual change approximately every 1–1.5 seconds.
+- More frequent visual changes for fast-paced storytelling.
+- Longer shots for emotional, dramatic, or cinematic moments.
+
+These are planning targets, not rigid limits.
+
+A visual change can be:
+
+- New image.
+- New illustration.
+- Camera movement.
+- Zoom or pan.
+- Animated diagram.
+- Text emphasis.
+- Character movement.
+- Map animation.
+- Object close-up.
+- Transition into another scene.
+
+Do not confuse visual changes with unique generated images.
+
+Use motion and compositing intelligently without sacrificing visual quality.
+
+---
+
+# 2. UNDERSTAND THE COMPLETE VOICEOVER FIRST
+
+Before generating assets, analyze the complete narration.
+
+Extract:
+
+1. Main topic.
+2. Central story.
+3. Important characters.
+4. Locations.
+5. Historical periods.
+6. Objects and technologies.
+7. Events and actions.
+8. Emotional moments.
+9. Statistics and numerical information.
+10. Important concepts that require visual explanation.
+
+Understand the context before generating anything.
+
+Do not generate assets sentence by sentence without understanding the complete story.
+
+---
+
+# 3. INTELLIGENT SCENE BREAKDOWN
+
+Divide the voiceover into meaningful visual scenes.
+
+Each scene must contain:
+
+- Scene ID.
+- Voiceover text.
+- Start timestamp.
+- End timestamp.
+- Main visual concept.
+- Visual explanation.
+- Required assets.
+- Character requirements.
+- Background requirements.
+- Camera movement.
+- Animation instructions.
+- Sound effects.
+- Transition instructions.
+
+A scene should explain one major idea.
+
+Split complicated sentences into multiple visual beats.
+
+Combine short related sentences when they communicate one visual concept.
+
+---
+
+# 4. ASSET GENERATION ENGINE
+
+For EVERY scene, determine which assets are required.
+
+Possible asset categories:
+
+## A. Main Illustrations
+
+- Main characters.
+- Human figures.
+- Historical personalities.
+- Animals.
+- Buildings.
+- Vehicles.
+- Important objects.
+- Scientific equipment.
+- Historical artifacts.
+
+## B. Environment Assets
+
+- Landscapes.
+- Cities.
+- Historical environments.
+- Rooms.
+- Streets.
+- Laboratories.
+- Forests.
+- Mountains.
+- Ancient civilizations.
+
+## C. Storytelling Assets
+
+- Action illustrations.
+- Character expressions.
+- Before-and-after comparisons.
+- Visual metaphors.
+- Symbolic representations.
+- Dramatic close-ups.
+- Evidence boards.
+- Newspaper clippings.
+
+## D. Explainer Assets
+
+- Infographics.
+- Maps.
+- Timelines.
+- Charts.
+- Statistics.
+- Process diagrams.
+- Flowcharts.
+- Labeled illustrations.
+- Comparisons.
+
+## E. Motion Assets
+
+- Moving characters.
+- Animated arrows.
+- Rotating objects.
+- Moving maps.
+- Camera zooms.
+- Parallax layers.
+- Animated typography.
+- Scene transitions.
+
+Generate only assets relevant to the narration.
+
+---
+
+# 5. VISUAL EXPLANATION RULE
+
+DO NOT simply illustrate the words.
+
+EXPLAIN THE MEANING.
+
+Example:
+
+Voiceover:
+"Scientists discovered that the Earth revolves around the Sun."
+
+Weak visual:
+A random picture of the Sun.
+
+Professional visual:
+- Sun positioned at the center.
+- Earth rotating around the Sun.
+- Orbital path clearly illustrated.
+- Directional arrows.
+- Camera slowly zooming out.
+- Optional explanatory labels.
+
+Another example:
+
+Voiceover:
+"The ancient civilization suddenly disappeared."
+
+Weak visual:
+A generic ancient building.
+
+Professional visual:
+- Wide shot of the ancient city.
+- Empty streets.
+- Abandoned buildings.
+- Broken pottery.
+- Atmospheric dust.
+- Slow cinematic camera movement.
+
+The viewer must understand the narration even when watching without sound.
+
+---
+
+# 6. ASSET QUANTITY CALCULATION
+
+Estimate the total narration duration.
+
+Use:
+
+Target asset count = Duration in minutes × 15 to 30.
+
+Examples:
+
+1-minute narration:
+15–30+ visual assets.
+
+3-minute narration:
+45–90+ visual assets.
+
+5-minute narration:
+75–150+ visual assets.
+
+10-minute narration:
+150–300+ visual assets.
+
+These counts represent visual beats, not necessarily unique AI-generated images.
+
+Generate enough unique assets to cover important concepts.
+
+Reuse an existing asset only when it makes storytelling sense, using different crops, camera movements, compositions, or animation.
+
+---
+
+# 7. CHARACTER AND STYLE CONSISTENCY
+
+Maintain consistent character appearances throughout the video.
+
+Create a character reference before generating multiple scenes involving the same character.
+
+Record:
+
+- Character ID.
+- Face and body design.
+- Clothing.
+- Colors.
+- Age appearance.
+- Hairstyle.
+- Distinctive features.
+- Illustration style.
+
+Maintain consistent environments, lighting, textures, and color palettes.
+
+Never randomly change character appearances between scenes.
+
+---
+
+# 8. STYLE INTELLIGENCE
+
+Automatically follow the selected project visual style.
+
+Supported visual styles:
+
+1. VOX Paper Collage.
+2. Stickman / Sticker Hybrid.
+3. Hand-Drawn Doodle.
+4. Noir Crime Thriller.
+5. Retro 8-Bit Arcade.
+6. Cinematic Documentary.
+7. Minimalist Motion Graphics.
+8. Historical Illustration.
+
+Do not mix unrelated styles without an explicit creative reason.
+
+Every generated asset must belong to the same visual universe.
+
+---
+
+# 9. GENERATION PROMPT INTELLIGENCE
+
+Each asset must receive an individual, detailed prompt.
+
+A good asset prompt must specify:
+
+- Subject.
+- Action.
+- Environment.
+- Composition.
+- Camera angle.
+- Lighting.
+- Color palette.
+- Visual style.
+- Mood.
+- Important details.
+- Aspect ratio.
+- Background requirements.
+- Continuity requirements.
+
+Avoid generic prompts.
+
+Bad:
+"An ancient man in a forest."
+
+Good:
+"A historically grounded illustration of an early human cautiously walking through a dense prehistoric forest, wearing primitive animal-hide clothing, surrounded by ancient vegetation, atmospheric morning mist, cinematic wide composition, detailed environmental storytelling, consistent hand-drawn documentary illustration style, 16:9."
+
+Never invent historical details as factual evidence.
+
+Use appropriate labels for reconstructions and artistic interpretations.
+
+---
+
+# 10. GENERATION EXECUTION
+
+Do not stop after creating the storyboard.
+
+Actually generate the planned assets using the available image-generation, video-generation, illustration, or rendering tools.
+
+Workflow:
+
+1. Prepare the complete asset manifest.
+2. Prioritize important visual assets.
+3. Generate assets in manageable batches.
+4. Verify each generated file.
+5. Save assets using organized filenames.
+6. Track successful and failed generations.
+7. Retry failed assets with corrected prompts.
+8. Continue until all critical visual beats are covered.
+
+Use parallel generation when supported and safe.
+
+Do not claim that assets were generated if the generation tool was never executed.
+
+If a tool limit prevents completion, report what remains instead of silently skipping assets.
+
+---
+
+# 11. ASSET FILE ORGANIZATION
+
+Use a structured directory:
+
+project/
+│
+├── voiceover/
+│   └── narration.mp3
+│
+├── storyboard/
+│   ├── scene_breakdown.json
+│   └── asset_manifest.json
+│
+├── assets/
+│   ├── characters/
+│   ├── backgrounds/
+│   ├── illustrations/
+│   ├── infographics/
+│   ├── maps/
+│   ├── objects/
+│   └── overlays/
+│
+├── audio/
+│   ├── music/
+│   └── sfx/
+│
+├── renders/
+│   ├── previews/
+│   └── final/
+│
+└── output/
+
+Use descriptive filenames:
+
+scene_001_main_character.png
+scene_002_historical_map.png
+scene_003_visual_explanation.png
+scene_004_timeline.png
+
+Never overwrite important assets accidentally.
+
+---
+
+# 12. VOICEOVER SYNCHRONIZATION
+
+Synchronize visual assets with narration.
+
+Use actual audio duration and timestamps whenever available.
+
+For each visual beat:
+
+- Identify its narration start.
+- Identify its narration end.
+- Match the asset to the spoken concept.
+- Respect the sentence's natural pacing.
+- Avoid visual changes that interrupt important information.
+- Synchronize important animations with spoken emphasis.
+
+Use word-level timestamps when available.
+
+Otherwise estimate timestamps from narration duration and refine them during preview.
+
+---
+
+# 13. VISUAL QUALITY CONTROL
+
+Before rendering, verify:
+
+[ ] Every important narration section has a visual.
+[ ] No major storytelling gaps exist.
+[ ] Assets match the spoken context.
+[ ] Character designs remain consistent.
+[ ] Text is readable.
+[ ] No broken or missing images exist.
+[ ] No accidental duplicated assets exist.
+[ ] Scene timing matches narration.
+[ ] Visual style remains consistent.
+[ ] Motion is smooth.
+[ ] Visual explanations are understandable without audio.
+
+If any important section lacks visuals, generate additional assets before final rendering.
+
+---
+
+# 14. AUTONOMOUS IMPROVEMENT RULE
+
+When the video looks visually empty:
+
+DO NOT simply increase the duration of existing images.
+
+Instead:
+
+1. Analyze the weak section.
+2. Identify missing visual explanations.
+3. Generate additional relevant assets.
+4. Introduce new camera angles.
+5. Add motion graphics and explanatory diagrams.
+6. Improve transitions.
+7. Re-render the affected section.
+
+Your goal is to improve the visual storytelling, not merely increase the number of images.
+
+---
+
+# 15. FINAL GOLDEN RULE
+
+VOICEOVER IS THE STORY.
+VISUALS ARE THE EXPLANATION.
+MOTION IS THE ENGAGEMENT.
+SYNCHRONIZATION IS THE EXPERIENCE.
+
+Never deliver a narration-heavy video with insufficient visuals.
+
+Never stop at storyboard generation.
+
+Generate, organize, synchronize, validate, and render.
+
+Your final objective is broadcast-quality visual storytelling.
