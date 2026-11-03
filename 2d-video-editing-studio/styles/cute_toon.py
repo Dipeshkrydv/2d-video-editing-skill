@@ -107,8 +107,8 @@ EXAMPLES = [
     "number reveal + reaction: RECIPES['react_reveal']",
 ]
 
-BEAT_S = 1.4
-MIX = {"scene": 0.25, "asset": 0.55, "reuse": 0.05, "text": 0.15}
+BEAT_S = 1.2
+MIX = {"scene": 0.25, "asset": 0.60, "reuse": 0.05, "text": 0.10}
 MENU = {
     "scene": ["wide establishing world", "street / village scene", "landscape vista", "interior room", "close detail"],
     "asset": ["prop the host holds", "landmark", "food / object", "animal", "symbol / flag", "map piece", "tool"],

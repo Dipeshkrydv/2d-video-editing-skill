@@ -225,8 +225,8 @@ EXAMPLES = [
 ]
 
 # ---- asset plan: stat/text-led; images are sparse, premium and product-like --------------------------------
-BEAT_S = 1.5
-MIX = {"scene": 0.30, "asset": 0.45, "reuse": 0.05, "text": 0.20}
+BEAT_S = 1.2
+MIX = {"scene": 0.35, "asset": 0.50, "reuse": 0.05, "text": 0.10}
 MENU = {
     "scene": ["premium environment photograph", "close-up of a material / texture", "workspace overhead", "skyline / location",
               "abstract light-and-shadow still life"],

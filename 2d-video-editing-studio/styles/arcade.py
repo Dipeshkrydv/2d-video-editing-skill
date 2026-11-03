@@ -87,5 +87,5 @@ PLAN = {
     "accents": ["golden yellow", "neon cyan", "arcade crimson"],
 }
 
-BEAT_S = 1.4
+BEAT_S = 1.2
 MIX = {"scene": 0.55, "asset": 0.35, "reuse": 0.05, "text": 0.05}

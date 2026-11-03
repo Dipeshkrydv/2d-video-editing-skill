@@ -13,13 +13,17 @@ In previous versions and poorly constructed explainers, videos suffered from **v
 
 ### The Professional Standard: Organic Word-to-Word Directorial Law
 **Every single spoken concept, keyword, noun, number, action, and emotional shift MUST have an active visual asset, cutout sticker, badge, procedural animation, or explanatory graphic.**
-- **ORGANIC WORD-TO-WORD SELECTION (NOT COMPULSORY 100)**: Asset count is not arbitrarily forced. Assets are formulated strictly according to the **script, narrative pacing, and word-for-word voiceover**.
+- **MANDATORY HIGH-DENSITY WORD-TO-WORD DIRECTIVE**: Asset generation must thoroughly visualize every concept. Sparse generation (4–7 images for 1 min, or 50–60 for 5 min) is strictly prohibited as a visual starvation failure.
+- **Compulsory Minimum Asset Floors (Images/Assets)**:
+  - **1-Minute Video (~60s)**: **28 to 40+ distinct visual assets** (at least 20–25 generated Flow images + keyed props; never 4–7 images!).
+  - **2-Minute Video (~120s)**: **55 to 80+ distinct visual assets** (at least 45–60 generated Flow images).
+  - **3-Minute Video (~180s)**: **85 to 120+ distinct visual assets** (at least 70–95 generated Flow images).
+  - **5-Minute Video (~300s)**: **140 to 200+ distinct visual assets** (at least 120–160 generated Flow images; never 50–60 images!).
 - **Senior Editor & Content Creator Logic**:
   - Antigravity applies creative intelligence and narrative logic to choose assets that dramatize and clarify the narration.
-  - Never spam meaningless icons or clutter the screen just to inflate numbers.
   - Zero Visual Starvation: Maintain continuous, purposeful visual rhythm (a fresh visual entrance or layered beat every 1.0 to 1.5 seconds) ensuring every key spoken concept has a creative visual twin.
-- **Maximum Inter-Event Duration**: No scene may go longer than **1.0 to 1.5 seconds** without a new visual entrance (sticker pop, counter, clock sweep, badge, or icon).
-- **Layered Multi-Asset Stacking**: Scenes must NEVER rely on a single solitary image. Every scene must combine 3 to 5 coordinated visual layers.
+- **Maximum Inter-Event Duration**: No scene may go longer than **1.0 to 1.5 seconds** without a new visual entrance (scene cut, sticker pop, counter, clock sweep, badge, or prop).
+- **Layered Multi-Asset Stacking**: Scenes must NEVER rely on a single solitary image. Every scene must combine 3 to 5 coordinated visual layers (Backdrop + Hero Subject + Reinforcing Evidence/Props + Typography Badges).
 
 ---
 

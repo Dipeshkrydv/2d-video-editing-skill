@@ -131,8 +131,8 @@ Confirm the selected style in one short line. Then present ONLY the Topic option
 
 #### 💬 STEP 3: Timing / Duration ONLY (Skip if already provided)
 Confirm the chosen topic. Then ask ONLY for the Timing / Duration:
-- **1. Short-Form Explainer:** ~45–60 seconds (high-retention viral pace)
-- **2. Full-Length Deep Dive:** ~2–5 minutes (in-depth documentary breakdown)
+- **1. Short-Form Explainer:** ~45–60 seconds (high-retention viral pace · 130–160 spoken words · ~12–16 lines)
+- **2. Full-Length Deep Dive:** Choose exact duration: ~2 minutes (260–300 words · ~25–35 lines), ~3 minutes (400–450 words · ~40–55 lines), or ~5 minutes (650–750+ words · ~65–90+ lines full documentary)
 *STOP and wait for the user's response. Do NOT ask about ratio or language yet.*
 
 #### 💬 STEP 4: Aspect Ratio ONLY (Skip if already provided)
@@ -149,7 +149,19 @@ Confirm aspect ratio. Then ask ONLY for the Voiceover Language:
 #### 💬 STEP 6: Full Script + Cartesia Free API Key Request & Guide
 Once all parameters are locked, in the NEXT message:
 1. Generate the complete, high-retention **Narrative Breakdown & Visual Storyboard**.
-2. Generate the **1-Click Ready-to-Copy Spoken Prose Script** in the exact requested language (formatted cleanly with natural pauses, strictly zero bracketed expression tags like `[excited]` or `[pause]`).
+2. **MANDATORY EXACT TIMELINE SCRIPT & WORD COUNT LAW**:
+   - Generate the **1-Click Ready-to-Copy Spoken Prose Script** in the exact requested language, matching the requested duration with mathematical accuracy:
+     - **45–60s Short**: **130–160 spoken words** (~12–16 lines in `LINES.tsv`).
+     - **2-Minute Video**: **260–300 spoken words** (~25–35 lines in `LINES.tsv`).
+     - **3-Minute Video**: **400–450 spoken words** (~40–55 lines in `LINES.tsv`).
+     - **5-Minute Video**: **650–750+ spoken words** (~65–90+ lines in `LINES.tsv`).
+   - **Zero Truncation / Zero Summarization Law**: NEVER generate an abbreviated summary, teaser, or 1-minute script when 2, 3, or 5 minutes is requested. The script MUST contain the full spoken prose to fill every single second.
+   - **Explicit Timeline Timestamps**: Format each line with its projected timestamp interval:
+     `[00:00 - 00:04] Line 01: Spoken narration hook goes here...`
+     `[00:04 - 00:08] Line 02: Next evidence sentence...`
+     `...`
+     `[04:55 - 05:00] Line 78: Concluding revelation and thought-provoking outro.`
+   - **Word Count Verification Pre-Flight Check**: Always print the total word count and line count. If the word count is below the minimum required for the requested duration, the agent MUST expand the story, examples, forensic details, and technical depth before presenting it.
 3. In the **EXACT SAME message**, request their **Cartesian AI Free API Key** (or ask to confirm if they've set the CARTESIA_API_KEY environment variable), accompanied by the 3-step 100% free guide:
    > **How to get your Free Cartesian API Key ($0 — No Card Needed):**
    > 1. Open [**play.cartesia.ai**](https://play.cartesia.ai) and sign in with any Google account.
@@ -192,6 +204,8 @@ All work happens inside a PROJECT folder made with `python studio.py new <folder
 - On an "unusual activity" error generation STOPS: call `flow_cancel`, do not resubmit, tell the user. After they have
   checked Flow: `python studio.py guard reset`, then `python studio.py generate` resumes (finished images are skipped).
 - `python studio.py guard` shows the pacing / pause state.
+- **Never Blind Re-dispatch on Client Timeout**: Client socket/tool timeouts (e.g. 150s) are transport timeouts, NOT Google Flow execution failures. Google Flow continues generating queued prompts on its cloud cluster. The agent/script must NEVER blind re-submit prompts. Check the project library or harvest directly.
+- **Autonomous Media Harvesting (`python studio.py harvest`)**: The user must NEVER be asked to manually click download buttons in Google Flow. The engine autonomously ingests, converts, and keys all media into `elements/raw/<name>.png` with zero user download friction.
 
 ### 2.2 🎬 EDITING LAW (v2 engine)
 - Never place anything at free coordinates. Use a layout (`hero`, `hero_r`, `duo`, `trio`, `board`, `focus`, `quote`,
@@ -217,15 +231,26 @@ All work happens inside a PROJECT folder made with `python studio.py new <folder
 
 ---
 
-## 🎨 3. SENIOR EDITOR & WORD-TO-WORD DIRECTORIAL ASSET SELECTION STANDARD
+## 🎨 3. MANDATORY HIGH-DENSITY WORD-TO-WORD ASSET GENERATION STANDARD
 
-- **No Artificial Quotas (Not Compulsory 100 Assets)**:
-  - Asset count is never forced to an arbitrary number. Visual assets must be formulated strictly according to the **script, narrative pacing, and word-for-word voiceover**.
-- **Senior Editor & Content Creator Logic**:
-  - Antigravity thinks and directs like an elite Senior Video Editor, Motion Designer, and Lead Content Creator:
-    - Never spam meaningless icons or clutter the screen just to inflate numbers.
-    - Select visual assets that creatively dramatize, clarify, or elevate what is being spoken (metaphors, emotional tensions, forensic clues, characters, authentic props).
-    - Maintain purposeful visual rhythm (at least one visual entrance or layered beat every 1.0 to 1.6 seconds, ~15–30+ assets/min, ~80% asset share) ensuring every key spoken concept has a creative visual twin.
+- **The Visual Starvation Law (Never Under-Generate)**:
+  - Generating sparse visual assets (e.g. 4–7 images for 1 minute, or 50–60 images for 5 minutes) is strictly classified as a **CRITICAL PRODUCTION FAILURE**.
+  - A broadcast-quality documentary or explainer requires continuous visual progression with at least one fresh visual entrance or layered beat every **1.0 to 1.5 seconds**.
+- **Compulsory Minimum Asset Floors (Images/Assets)**:
+  - **1-Minute Video (~60s)**: **28 to 40+ distinct visual assets** (at least 20–25 generated Flow images + keyed props; strictly NEVER just 4–7 images!).
+  - **2-Minute Video (~120s)**: **55 to 80+ distinct visual assets** (at least 45–60 generated Flow images).
+  - **3-Minute Video (~180s)**: **85 to 120+ distinct visual assets** (at least 70–95 generated Flow images).
+  - **5-Minute Video (~300s)**: **140 to 200+ distinct visual assets** (at least 120–160 generated Flow images; strictly NEVER just 50–60 images!).
+- **Word-for-Word Script Directorial Breakdown**:
+  - The director agent MUST analyze the spoken script **word-by-word**: every key concept, character, emotion, number, location, forensic clue, and metaphor must have its dedicated visual twin.
+  - **Dual-Mode Visual Allocation**:
+    - **Mode A (Full-Bleed Photographic Scenes)**: Edge-to-edge environment, historical scene, dark interrogation room, atmospheric alley (no magenta, no cutout).
+    - **Mode B (Cutout Props & Forensic Evidence)**: Isolated subject, character, weapon, document, cassette tape, fingerprint card, or sticker on `#FF00FF` magenta background, keyed via `studio.py key` with 2-tier natural shadows and die-cut contour.
+  - **Multi-Asset Layering**: A scene is NEVER a lone sticker on a blank canvas. Every scene MUST stack:
+    1. Ambient living canvas / photographic backdrop (Mode A).
+    2. Primary subject or hero character (Mode B).
+    3. Reinforcing contextual props, evidence markers, documents (Mode B).
+    4. Procedural instruments, clocks, stamps (max 2/video), seals, or ASS kinetic typography tags.
 
 ---
 
@@ -243,10 +268,10 @@ Whenever a user requests a **Crime Documentary, True Crime, Murder Mystery, Poli
 
 ---
 
-## 👑 5. THE 12 INVIOLABLE MASTER PRODUCTION & EDITORIAL LAWS
+## 👑 5. THE 14 INVIOLABLE MASTER PRODUCTION & EDITORIAL LAWS
 
 1. **100% Semantic Word-Locked Explanation**: Every visual asset is a literal or thematic twin explaining the spoken words at that microsecond. Zero disconnected decorative filler.
-2. **Organic Word-to-Word Directorial Asset Selection**: Dictated by script and voiceover pacing. Zero visual starvation; visual progression every 1.0–1.6s.
+2. **Mandatory High-Density Asset Floors & Word-by-Word Visual Progression**: Dictated by script and voiceover pacing. Every 1.0–1.5s must have an active visual entrance. Compulsory minimum floors: ≥ 28–40+ assets for 1 min, ≥ 55–80+ for 2 min, ≥ 140–200+ for 5 min. Sparse visual starvation (4–7 images for 1m or 50–60 for 5m) is strictly forbidden.
 3. **Curated Static Heavyweight Typography**: Exclusively use bold static fonts (**Anton-Regular**, **Khand-Bold**, **Baloo2-ExtraBold**, **LiberationSans-Bold**, **Space Mono**, **Noto Sans Devanagari**, **Hind**) with dynamic multi-line wrapping and font auto-scaling. Zero text clipping, zero thin hairline font bugs.
 4. **Zero Tofu Glyphs (`▯▯`)**: All text passes through `sanitize_scene_text()` to strip emojis, rare dingbats, and invalid Unicode. Only clean Devanagari, Latin alphabet, and standard punctuation are rendered.
 5. **12-Column Grid & Spatial Hierarchy**: 3-layer parallax, rule of thirds, Mode B balanced duets (character left at $x=0.32$, stamp right at $x=0.72$).
@@ -255,8 +280,10 @@ Whenever a user requests a **Crime Documentary, True Crime, Murder Mystery, Poli
 8. **Professional & Meaningful Motion**: Subtle 4% slow drift camera zoom, smooth cubic fades, spring pops with settle (0.88 -> 1.0), gentle rise, drawing reveals. ZERO irritating continuous shaking or jitter loops.
 9. **0.000s Attack Synchronization**: Audio Sample 0 (first spoken consonant) == Video Frame 0. Instant opacity = 1.0 on attack frame.
 10. **Mobile Safe Zones & Desktop Framing**: Strict clearance for phone notches (160px top), TikTok/Reels caption marquee (300px bottom), and button rail (130px right).
-11. **Broadcast Audio Engineering**: Mastered to -14 LUFS with dynamic music ducking (-18dB during voiceover) and tactile Foley SFX on every visual hit.
+11. **Broadcast Audio Engineering & Compulsory Foley/Music Law**: Mastered to -14 LUFS with dynamic music ducking (-18dB during voiceover) and tactile Foley SFX on every visual hit. The engine and agent MUST NEVER omit or bypass sound design. cues.tsv is automatically populated with rich BGM and Foley cues for every scene entrance and micro-asset hit via python studio.py mix --autocues. mix.wav is strictly mandatory.
 12. **Mandatory Google Flow Asset Engine & Zero API Key Leaks**: All assets generated on Google Flow (`Banana Nano 2.1` / `Pro` / `Imagen 3`) via DeepX Bridge ($0 API cost). Never hardcode, commit, or leak private API keys.
+13. **Zero Duplicate Generation & Idempotent Flow Dispatch Law**: Every prompt dispatched to Google Flow is tracked with its unique hash and timestamp in `flow_manifest.json` before submission. Client socket/tool timeouts (e.g. 150s) are client transport timeouts, NOT Google Flow execution failures (Google Flow continues generating queued prompts on its cloud cluster). The AI agent or script MUST NEVER blind re-submit a prompt after a timeout. Check the Flow project library / canvas first. If an asset is already in-flight or generated, NEVER re-dispatch it.
+14. **Autonomous Media Ingestion & Zero User Download Burden Law**: The user must NEVER be asked to manually click download buttons or select tiles in Google Flow. The engine autonomously harvests, ingests, converts (WebP to PNG), and keys all generated media directly into `elements/raw/<id>.png` via in-browser canvas capture or automated background download (`python studio.py harvest`).
 
 ---
 
@@ -276,6 +303,33 @@ python studio.py render                    # -> master.mp4
 # Or 1-Command Turnkey Mobile Runner:
 python mobile_run.py
 ```
+
+### 6.1 🎬 Video Preview (Post-Render Playback)
+
+After video generation is complete, the agent MUST present the rendered video(s) directly in the chat for instant in-place preview — both single video and multiple video outputs.
+
+#### Single Video Preview
+When a single `master.mp4` is rendered, display it immediately:
+```html
+<video src="/path/to/project/master.mp4" controls width="100%"></video>
+```
+
+#### Multiple Video / Multi-Format Preview
+When multiple videos are rendered (e.g. preview + master, or multiple cuts/segments), display each with format fallbacks:
+```html
+<video controls poster="thumb.jpg">
+  <source src="clip.webm" type="video/webm">
+  <source src="clip.mp4" type="video/mp4">
+</video>
+```
+
+#### Playback Rules
+- **Always present the video inline** after `python studio.py render` or `python studio.py preview` completes successfully.
+- Use the **actual absolute path** to the rendered file (e.g. `/data/user/0/com.termux/files/home/videos/my_video/master.mp4`).
+- For preview renders (540p draft), show with a note: `📺 Preview (540p draft)`.
+- For final renders (1080p master), show with: `🎬 Final Master (1080p)`.
+- If both `.webm` and `.mp4` exist, include both as `<source>` tags for maximum compatibility.
+- For multi-segment or multi-cut projects, present each video in order with a labeled heading.
 
 ---
 

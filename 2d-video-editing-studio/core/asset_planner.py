@@ -36,8 +36,8 @@ def has_number(text):
 
 def allocate(durs, total):
     """Beats per line: proportional to duration, with a hard anti-gap guarantee
-    (at least 1 visual beat every <= 1.8s, so long spoken lines never suffer dead pauses)."""
-    min_counts = [max(1, math.ceil(d / 1.8)) for d in durs]
+    (at least 1 visual beat every <= 1.1s, ensuring high-density visual storytelling without dead pauses)."""
+    min_counts = [max(1, math.ceil(d / 1.1)) for d in durs]
     raw = [max(float(min_c), d / sum(durs) * total) for d, min_c in zip(durs, min_counts)]
     counts = [int(x) for x in raw]
     remainder = max(0, total - sum(counts))
@@ -105,8 +105,8 @@ def main():
     lines = list(csv.DictReader(open("VO.tsv", encoding="utf-8"), delimiter="\t"))
     durs = [float(r["end"]) - float(r["start"]) for r in lines]
     dur = float(lines[-1]["end"]) + 1.0
-    beat_s = float(a.pace) if re.fullmatch(r"\d+(\.\d+)?", a.pace) else plan["beat_s"] * PACE[a.pace]
-    min_total = sum(max(1, math.ceil(d / 1.8)) for d in durs)
+    beat_s = float(a.pace) if re.fullmatch(r"\d+(\.\d+)?", a.pace) else min(1.2, plan["beat_s"] * PACE[a.pace])
+    min_total = sum(max(1, math.ceil(d / 1.1)) for d in durs)
     total = max(min_total, math.ceil(dur / beat_s))
     counts = allocate(durs, total)
 

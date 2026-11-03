@@ -237,7 +237,7 @@ EXAMPLES = [
 ]
 
 # ---- asset plan: modern stickman explainer (35% stylized 2D scenes, 55% expressive stick assets) ---
-BEAT_S = 1.3
+BEAT_S = 1.1
 MIX = {"scene": 0.35, "asset": 0.55, "reuse": 0.02, "text": 0.08}
 
 MENU = {

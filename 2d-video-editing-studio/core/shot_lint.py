@@ -171,8 +171,8 @@ def lint(shots_path="SHOTS.json", quiet=False):
         if have < need * 0.85:
             errors.append(f"plan needs {need} images, SHOTS.json has {have} ({have / need:.0%}): the edit will have dead air. "
                           f"See PLAN.md for what each line needs")
-        elif have > need * 1.25:
-            warns.append(f"SHOTS.json has {have} images but the plan needs {need}: padding costs Flow time and risks repeats")
+        elif have > need * 1.6:
+            warns.append(f"SHOTS.json has {have} images (plan needs {need}): high-density coverage - ensure distinct prompts")
         planned, got = {}, {}
         for b in plan["beats"]:
             if b["type"] in ("scene", "asset"):

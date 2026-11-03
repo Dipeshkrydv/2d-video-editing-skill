@@ -246,8 +246,8 @@ EXAMPLES = [
 ]
 
 # ---- asset plan: true-crime noir is cinema-led: atmospheric edge-to-edge shots with slow push-ins
-BEAT_S = 1.6
-MIX = {"scene": 0.65, "asset": 0.25, "reuse": 0.05, "text": 0.05}
+BEAT_S = 1.2
+MIX = {"scene": 0.50, "asset": 0.40, "reuse": 0.05, "text": 0.05}
 MENU = {
     "scene": ["wide establishing shot of the location at night", "medium shot of the key person in shadow",
               "extreme close-up of eyes / hands / a detail", "over-the-shoulder looking at evidence",

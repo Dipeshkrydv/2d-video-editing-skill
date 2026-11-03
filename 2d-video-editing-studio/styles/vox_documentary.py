@@ -352,7 +352,7 @@ EXAMPLES = [
 # ---- asset plan: what a Vox collage needs --------------------------------------------------------------
 # ~45% of beats are isolated cut-outs (halftoned by the engine), ~25% are archival photos shown as torn prints,
 # ~20% are text/graphic beats (giant numeral, note, chart, strip title) that need NO generated image.
-BEAT_S = 1.4
+BEAT_S = 1.1
 MIX = {"scene": 0.35, "asset": 0.50, "reuse": 0.05, "text": 0.10}
 MENU = {
     "scene": ["archival street / crowd photograph", "interior room photograph", "landscape / place photograph",
